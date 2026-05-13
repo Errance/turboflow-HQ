@@ -1,7 +1,9 @@
 {
   "project": "Turboflow",
   "linear_workspace": "TBD",
-  "github_org": "wenqingyu",
+  "github_org": "turboflow-xyz",
+  "hq_github": "wenqingyu/Turboflow-HQ",
+  "default_github_account": "thomson-yee",
   "repos": [
     {
       "name": "Turboflow-HQ",
@@ -10,10 +12,10 @@
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
-      "github_account": "worker-primary",
+      "github_account": "thomson-yee",
       "stack": "hq",
-      "test_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json",
-      "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json"
+      "test_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json",
+      "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json"
     }
   ]
 }

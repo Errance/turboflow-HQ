@@ -13,8 +13,9 @@ This HQ repository coordinates the Magic Flow workflow for Turboflow repositorie
 1. `prd/`
 2. `specs/`
 3. `ops/repos.json`
-4. `ops/roles.json`
-5. `ops/workers.json`
+4. `ops/policy.json`
+5. `ops/roles.json`
+6. `ops/workers.json`
 
 ## Key Paths
 
@@ -22,12 +23,21 @@ This HQ repository coordinates the Magic Flow workflow for Turboflow repositorie
 - `specs/`: architecture, API, and domain references
 - `releases/`: release notes and changelog outputs
 - `ops/repos.json`: registered repos and project routing data
+- `ops/policy.json`: project account and oversight policy
 - `ops/roles.json`: role label to GitHub account mapping
 - `ops/workers.json`: active and historical worker state
 
 ## Registered Repos
 
 See `ops/repos.json` for the complete registry.
+
+## Project Policy
+
+- Product GitHub org: `turboflow-xyz`
+- HQ GitHub repo: `wenqingyu/Turboflow-HQ`
+- Project GitHub account: `thomson-yee`
+- We act as reviewer and supervisor for Turboflow repositories.
+- All current and future Turboflow repo registrations should use `github_account: "thomson-yee"` unless `ops/policy.json` is explicitly updated.
 
 ## Workflow Conventions
 
@@ -39,7 +49,7 @@ See `ops/repos.json` for the complete registry.
 ## Environment
 
 - HQ Path: `/Users/wenqingyu/Documents/workspace/turboflow/Turboflow-HQ`
-- GitHub org: `wenqingyu`
+- GitHub org: `turboflow-xyz`
 - Linear workspace: `TBD`
 
 ## Verification

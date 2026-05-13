@@ -4,7 +4,9 @@
 
 - **Project:** Turboflow
 - **Linear Workspace:** TBD
-- **GitHub Org:** wenqingyu
+- **GitHub Org:** turboflow-xyz
+- **HQ GitHub Repo:** wenqingyu/Turboflow-HQ
+- **Project GitHub Account:** thomson-yee
 - **HQ Path:** /Users/wenqingyu/Documents/workspace/turboflow/Turboflow-HQ
 - **Created:** 2026-05-14
 
@@ -22,6 +24,13 @@ You are in HQ mode. Here you:
 - Generate changelogs with `/mf-release-notes`.
 - Do not write product code in this repo.
 
+## Project Policy
+
+- Use `thomson-yee` as the GitHub account for this project.
+- Treat `turboflow-xyz` as the product repository organization.
+- Treat this HQ as reviewer and supervisor context for Turboflow repositories.
+- Before dispatching project implementation work, sync and study product repos in `ops/repos.json`.
+
 ## Workflow
 
 1. Drop PRD in `prd/`, then run `/mf-prd-decompose prd/{file}.md`.
@@ -35,6 +44,7 @@ You are in HQ mode. Here you:
 | File | Purpose |
 |------|---------|
 | `ops/repos.json` | Repo registry; edit to add repos and fill in TBD fields |
+| `ops/policy.json` | Project account and oversight policy |
 | `ops/workers.json` | Live worker state, written by hooks |
 | `ops/dispatch-log.jsonl` | Audit trail of workers launched |
 | `ops/infra.json` | Infrastructure registry |

@@ -1,0 +1,23 @@
+{
+  "project": "Turboflow",
+  "github": {
+    "product_org": "turboflow-xyz",
+    "hq_repo": "wenqingyu/Turboflow-HQ",
+    "default_account": "thomson-yee",
+    "policy": "All Turboflow project work, review, supervision, and future repo registrations use the thomson-yee GitHub account unless this policy is explicitly changed."
+  },
+  "oversight": {
+    "role": "reviewer-supervisor",
+    "responsibilities": [
+      "sync project repositories into ops/repos.json",
+      "study repo architecture before dispatching implementation work",
+      "review and supervise project changes across Turboflow repositories"
+    ]
+  },
+  "repo_sync": {
+    "source": "https://github.com/turboflow-xyz",
+    "last_checked": "2026-05-14",
+    "status": "blocked-private-or-empty",
+    "notes": "Public GitHub API returned zero repositories for turboflow-xyz. The local gh auth preflight reported broken authentication, so private repo enumeration is not available in this session."
+  }
+}

@@ -4,9 +4,17 @@ HQ for Turboflow repos.
 
 This repository is the Magic Flow orchestration context for Turboflow.
 
+## Project Policy
+
+- Product GitHub org: `turboflow-xyz`
+- HQ GitHub repo: `wenqingyu/Turboflow-HQ`
+- Project GitHub account: `thomson-yee`
+- This HQ is the reviewer and supervisor context for Turboflow repositories.
+
 ## Key Paths
 
 - `ops/repos.json`: repo registry and routing metadata
+- `ops/policy.json`: project account and oversight policy
 - `ops/workers.json`: active and historical worker state
 - `ops/infra.json`: infrastructure registry
 - `prd/`: PRDs for decomposition into Linear work

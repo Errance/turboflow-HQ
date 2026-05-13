@@ -1,6 +1,14 @@
 {
   "backend-architect": {
-    "github_account": "abu-ismail-01",
+    "github_account": "thomson-yee",
     "description": "Backend and data engineering"
+  },
+  "reviewer": {
+    "github_account": "thomson-yee",
+    "description": "Project reviewer for Turboflow repositories"
+  },
+  "supervisor": {
+    "github_account": "thomson-yee",
+    "description": "Project supervisor for Turboflow repositories"
   }
 }
