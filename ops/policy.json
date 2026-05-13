@@ -17,9 +17,9 @@
   "repo_sync": {
     "source": "https://github.com/turboflow-xyz",
     "index": "ops/repo-index.json",
-    "last_checked": "2026-05-13T17:58:03Z",
-    "status": "blocked-private-or-empty",
-    "notes": "Public GitHub API returned zero public repositories for turboflow-xyz. The local gh auth preflight reported broken authentication, so private repo enumeration is not available in this session."
+    "last_checked": "2026-05-13T18:18:53Z",
+    "status": "synced",
+    "notes": "Authenticated GitHub CLI access as thomson-yee found 14 private repositories. All visible repositories were cloned under /Users/wenqingyu/Documents/workspace/turboflow and registered in ops/repos.json."
   },
   "hq_sync": {
     "default_branch": "main",
