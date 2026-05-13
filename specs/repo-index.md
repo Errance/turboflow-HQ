@@ -45,3 +45,5 @@ This document summarizes repository discovery for the `turboflow-xyz` GitHub org
 2. Map Helm chart apps to service repos and identify charts without corresponding code repos.
 3. Inspect service entrypoints, ports, queues, databases, and external APIs.
 4. Produce a repo topology document under `specs/architecture-decisions/`.
+
+The first topology draft is now tracked in `specs/architecture-decisions/0001-current-turboflow-topology.md`.

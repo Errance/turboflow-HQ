@@ -15,7 +15,8 @@
     "private_repos_visible": 14,
     "public_repos_visible": 0,
     "cloned_repos": 14,
-    "local_root": "/Users/wenqingyu/Documents/workspace/turboflow"
+    "local_root": "/Users/wenqingyu/Documents/workspace/turboflow",
+    "topology_doc": "specs/architecture-decisions/0001-current-turboflow-topology.md"
   },
   "org_metadata": {
     "login": "turboflow-xyz",
