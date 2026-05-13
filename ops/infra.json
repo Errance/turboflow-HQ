@@ -1,0 +1,70 @@
+{
+  "_schema_version": "1.0.0",
+  "_note": "Project infrastructure registry. Replace TBD values as Turboflow infrastructure is registered.",
+  "cloud": {
+    "providers": [
+      {
+        "name": "manual",
+        "accounts": {
+          "dev": {
+            "project_id": "TBD",
+            "region": "TBD"
+          }
+        }
+      }
+    ],
+    "_providers_help": "Supported: gcp, aws, azure, vercel, cloudflare, railway, fly, supabase. Add one object per provider."
+  },
+  "environments": {
+    "dev": {
+      "auto_deploy_on_merge": false,
+      "approval_required": false,
+      "url": "TBD"
+    }
+  },
+  "services": {
+    "hq": {
+      "repo": "Turboflow-HQ",
+      "runtime": "repository",
+      "health_endpoint": "N/A"
+    }
+  },
+  "terraform": {
+    "infra_repo": "TBD",
+    "state_backend": "TBD",
+    "state_bucket": "TBD",
+    "environments_dir": "TBD",
+    "modules_dir": "TBD"
+  },
+  "secrets": {
+    "store": "TBD",
+    "_store_help": "Options: gcp-secret-manager, aws-ssm, aws-secrets-manager, vault, env-vars-only, github-secrets",
+    "scanning_enabled": false,
+    "rotation_policy": "TBD",
+    "github_environments": []
+  },
+  "ci_cd": {
+    "platform": "github-actions",
+    "workflows_location": "TBD",
+    "_workflows_location_help": "Options: in-infra-repo, per-repo, hybrid",
+    "reusable_workflows_repo": "TBD",
+    "has_secrets_scanning": false,
+    "has_rollback_workflow": false
+  },
+  "monitoring": {
+    "platform": "TBD",
+    "alerts_email": "",
+    "dashboards_managed_by": "TBD"
+  },
+  "database": {
+    "provider": "TBD",
+    "migrations_location": "TBD",
+    "migrations_in_repo": "TBD"
+  },
+  "domains": {
+    "registrar": "TBD",
+    "_registrar_help": "Options: cloudflare, route53, gcp-domains, manual",
+    "ssl": "TBD",
+    "records_file": "TBD"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "project": "Turboflow",
+  "linear_workspace": "TBD",
+  "github_org": "wenqingyu",
+  "repos": [
+    {
+      "name": "Turboflow-HQ",
+      "github": "wenqingyu/Turboflow-HQ",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/Turboflow-HQ",
+      "linear_team_id": "TBD",
+      "linear_team_key": "TBD",
+      "linear_project_id": "TBD",
+      "github_account": "worker-primary",
+      "stack": "hq",
+      "test_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json",
+      "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json"
+    }
+  ]
+}
