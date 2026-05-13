@@ -29,6 +29,7 @@ You are in HQ mode. Here you:
 - Use `thomson-yee` as the GitHub account for this project.
 - Treat `turboflow-xyz` as the product repository organization.
 - Treat this HQ as reviewer and supervisor context for Turboflow repositories.
+- Use `ops/repo-index.json` as the starting point for repo study and later topology work.
 - Before dispatching project implementation work, sync and study product repos in `ops/repos.json`.
 - After successful validation and commit of HQ-only changes, push `main` to `origin/main` without asking for per-change confirmation.
 - Never force-push or push failing validation without explicit confirmation.
@@ -47,6 +48,7 @@ You are in HQ mode. Here you:
 |------|---------|
 | `ops/repos.json` | Repo registry; edit to add repos and fill in TBD fields |
 | `ops/policy.json` | Project account and oversight policy |
+| `ops/repo-index.json` | Discovered Turboflow organization repositories and sync state |
 | `ops/workers.json` | Live worker state, written by hooks |
 | `ops/dispatch-log.jsonl` | Audit trail of workers launched |
 | `ops/infra.json` | Infrastructure registry |

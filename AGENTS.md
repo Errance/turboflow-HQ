@@ -24,6 +24,7 @@ This HQ repository coordinates the Magic Flow workflow for Turboflow repositorie
 - `releases/`: release notes and changelog outputs
 - `ops/repos.json`: registered repos and project routing data
 - `ops/policy.json`: project account and oversight policy
+- `ops/repo-index.json`: discovered Turboflow organization repositories and sync state
 - `ops/roles.json`: role label to GitHub account mapping
 - `ops/workers.json`: active and historical worker state
 
@@ -37,6 +38,7 @@ See `ops/repos.json` for the complete registry.
 - HQ GitHub repo: `wenqingyu/Turboflow-HQ`
 - Project GitHub account: `thomson-yee`
 - We act as reviewer and supervisor for Turboflow repositories.
+- Build and maintain the organization repo index in `ops/repo-index.json` before topology work.
 - All current and future Turboflow repo registrations should use `github_account: "thomson-yee"` unless `ops/policy.json` is explicitly updated.
 - After successful validation and commit of HQ-only changes, push `main` to `origin/main` without asking for per-change confirmation.
 

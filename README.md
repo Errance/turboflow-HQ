@@ -15,6 +15,7 @@ This repository is the Magic Flow orchestration context for Turboflow.
 
 - `ops/repos.json`: repo registry and routing metadata
 - `ops/policy.json`: project account and oversight policy
+- `ops/repo-index.json`: discovered organization repositories and sync state
 - `ops/workers.json`: active and historical worker state
 - `ops/infra.json`: infrastructure registry
 - `prd/`: PRDs for decomposition into Linear work

@@ -16,9 +16,10 @@
   },
   "repo_sync": {
     "source": "https://github.com/turboflow-xyz",
-    "last_checked": "2026-05-14",
+    "index": "ops/repo-index.json",
+    "last_checked": "2026-05-13T17:58:03Z",
     "status": "blocked-private-or-empty",
-    "notes": "Public GitHub API returned zero repositories for turboflow-xyz. The local gh auth preflight reported broken authentication, so private repo enumeration is not available in this session."
+    "notes": "Public GitHub API returned zero public repositories for turboflow-xyz. The local gh auth preflight reported broken authentication, so private repo enumeration is not available in this session."
   },
   "hq_sync": {
     "default_branch": "main",

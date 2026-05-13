@@ -1,0 +1,28 @@
+{
+  "_schema_version": "1.0.0",
+  "project": "Turboflow",
+  "source": {
+    "type": "github-org",
+    "org": "turboflow-xyz",
+    "url": "https://github.com/turboflow-xyz",
+    "api_url": "https://api.github.com/orgs/turboflow-xyz"
+  },
+  "sync": {
+    "last_checked_at": "2026-05-13T17:58:03Z",
+    "method": "github-public-api",
+    "status": "blocked-private-or-empty",
+    "public_repos_visible": 0,
+    "private_repo_access": "blocked-gh-auth",
+    "notes": "The public GitHub API reports zero public repositories for turboflow-xyz. Magic Flow GitHub auth preflight reports broken gh auth, so private repositories cannot be enumerated in this session."
+  },
+  "org_metadata": {
+    "login": "turboflow-xyz",
+    "id": 282439063,
+    "created_at": "2026-05-07T03:15:20Z",
+    "updated_at": "2026-05-13T04:30:01Z",
+    "public_repos": 0,
+    "followers": 2,
+    "is_verified": false
+  },
+  "repos": []
+}

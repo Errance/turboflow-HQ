@@ -14,8 +14,8 @@
       "linear_project_id": "TBD",
       "github_account": "thomson-yee",
       "stack": "hq",
-      "test_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json",
-      "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json"
+      "test_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json ops/repo-index.json",
+      "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json ops/repo-index.json"
     }
   ]
 }
