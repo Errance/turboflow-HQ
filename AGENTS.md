@@ -38,6 +38,7 @@ See `ops/repos.json` for the complete registry.
 - Project GitHub account: `thomson-yee`
 - We act as reviewer and supervisor for Turboflow repositories.
 - All current and future Turboflow repo registrations should use `github_account: "thomson-yee"` unless `ops/policy.json` is explicitly updated.
+- After successful validation and commit of HQ-only changes, push `main` to `origin/main` without asking for per-change confirmation.
 
 ## Workflow Conventions
 
@@ -45,6 +46,7 @@ See `ops/repos.json` for the complete registry.
 - Use product repos for code changes unless the task is explicitly HQ-only.
 - Keep repo metadata in `ops/*.json` current.
 - Do not create separate Claude-only and Codex-only workflow rules.
+- Never force-push or push failing validation without explicit confirmation.
 
 ## Environment
 

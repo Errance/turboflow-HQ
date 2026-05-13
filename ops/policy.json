@@ -19,5 +19,17 @@
     "last_checked": "2026-05-14",
     "status": "blocked-private-or-empty",
     "notes": "Public GitHub API returned zero repositories for turboflow-xyz. The local gh auth preflight reported broken authentication, so private repo enumeration is not available in this session."
+  },
+  "hq_sync": {
+    "default_branch": "main",
+    "remote": "origin",
+    "push_after_commit": true,
+    "policy": "After successful validation and commit of HQ-only changes, push Turboflow-HQ main to origin/main without asking for per-change confirmation.",
+    "safety_limits": [
+      "Do not push uncommitted changes.",
+      "Do not force-push without explicit confirmation.",
+      "Do not push if validation fails.",
+      "Do not push secrets or destructive history changes."
+    ]
   }
 }
