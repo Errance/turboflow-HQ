@@ -139,19 +139,19 @@ Important edges:
 
 ## Technical Gaps
 
-| Gap | Severity | Why it matters |
-| --- | --- | --- |
-| Missing explicit service boundary map | Critical | Engineers cannot safely know which module owns orders, positions, pool assets, prediction state, notices, rewards, or scanner recovery. |
-| Missing partition and single-writer model | Critical | Horizontal scaling requires deterministic ownership by chain, pair, account, pool, order, or task shard. |
-| Missing durable command/event boundary | Critical | API currently can mutate DB and process-local state directly; workers depend on in-memory queues and cache reconstruction. |
+| Gap                                               | Severity | Why it matters                                                                                                                                                      |
+| ------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Missing explicit service boundary map             | Critical | Engineers cannot safely know which module owns orders, positions, pool assets, prediction state, notices, rewards, or scanner recovery.                             |
+| Missing partition and single-writer model         | Critical | Horizontal scaling requires deterministic ownership by chain, pair, account, pool, order, or task shard.                                                            |
+| Missing durable command/event boundary            | Critical | API currently can mutate DB and process-local state directly; workers depend on in-memory queues and cache reconstruction.                                          |
 | Missing leader/lease strategy for singleton loops | Critical | Scanner, cron, pool jobs, liquidation, funding fee, prediction settlement, and compensation loops need explicit leader or shard ownership before replica expansion. |
-| Missing idempotency register | High | Chain submit, order execute, prediction settle, liquidity, rewards, notices, and compensation need request/task dedupe keys and replay rules. |
-| Missing runtime config registry | High | Trading behavior depends on `sys_config` and JSON keys spread across keeper, API, oracle, order service, and admin backend. |
-| Missing ownership map for DB tables | High | Order, fill, position, asset, cashbook, pool, prediction, voucher, and chain event tables are touched by multiple paths. |
-| Missing state rebuild contract | High | Restart behavior relies on DB reload, delayed retries, scan repair, and repeated cache sync loops, but no documented RTO/RPO or replay procedure exists. |
-| Missing SLO and capacity baseline | High | There is no visible target for order submit latency, scanner lag, queue depth, liquidation delay, settlement delay, or recovery time. |
-| Missing test boundaries by domain | Medium | Unit and integration tests cannot target isolated responsibilities while global state and service wiring remain broad. |
-| Missing contract source artifact | Medium | Generated SVM IDL is visible; the source contract repo and release artifact chain are not visible in the current registry. |
+| Missing idempotency register                      | High     | Chain submit, order execute, prediction settle, liquidity, rewards, notices, and compensation need request/task dedupe keys and replay rules.                       |
+| Missing runtime config registry                   | High     | Trading behavior depends on `sys_config` and JSON keys spread across keeper, API, oracle, order service, and admin backend.                                         |
+| Missing ownership map for DB tables               | High     | Order, fill, position, asset, cashbook, pool, prediction, voucher, and chain event tables are touched by multiple paths.                                            |
+| Missing state rebuild contract                    | High     | Restart behavior relies on DB reload, delayed retries, scan repair, and repeated cache sync loops, but no documented RTO/RPO or replay procedure exists.            |
+| Missing SLO and capacity baseline                 | High     | There is no visible target for order submit latency, scanner lag, queue depth, liquidation delay, settlement delay, or recovery time.                               |
+| Missing test boundaries by domain                 | Medium   | Unit and integration tests cannot target isolated responsibilities while global state and service wiring remain broad.                                              |
+| Missing contract source artifact                  | Medium   | Generated SVM IDL is visible; the source contract repo and release artifact chain are not visible in the current registry.                                          |
 
 ## Systematic Limits
 
