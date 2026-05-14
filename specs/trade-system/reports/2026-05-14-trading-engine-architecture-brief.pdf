@@ -1,0 +1,666 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R] /Count 5 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 13 0 R /F2 14 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 8140 >>
+stream
+0.030 0.180 0.330 rg
+BT /F2 21 Tf 42.0 744.0 Td (Turboflow Trading Engine Architecture Brief) Tj ET
+0 0 0 rg
+0.300 0.300 0.300 rg
+BT /F1 10 Tf 42.0 722.0 Td (Status: Draft | Date: 2026-05-14 | Source: Turboflow-HQ fbdf588 on main plus current local product repos) Tj ET
+0 0 0 rg
+0.960 0.980 1.000 rg 0.750 0.800 0.860 RG 0.80 w 42.0 636.0 528.0 68.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F1 10.5 Tf 54.0 686.0 Td (Executive view: one public API edge fronts two visible execution paths: CEX/off-chain) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10.5 Tf 54.0 671.5 Td (perpetuals in cex-order-service, and Surf v2 SVM / event-contract trading in surfv2-dex-svm-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10.5 Tf 54.0 657.0 Td (keeper. Both rely on oracle data, shared base/framework contracts, Redis/Postgres, and) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10.5 Tf 54.0 642.5 Td (Helm/Kubernetes deployment.) Tj ET
+0 0 0 rg
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 602.0 Td (Architecture Diagram) Tj ET
+0 0 0 rg
+0.970 0.970 0.940 rg 0.350 0.450 0.550 RG 0.80 w 46.0 570.0 82.0 34.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 52.0 589.0 Td (Clients / Frontends) Tj ET
+0 0 0 rg
+0.920 0.960 1.000 rg 0.350 0.450 0.550 RG 0.80 w 188.0 570.0 108.0 42.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 194.0 597.0 Td (cex-api-service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 194.0 585.0 Td (API + realtime WS) Tj ET
+0 0 0 rg
+0.970 0.970 0.940 rg 0.350 0.450 0.550 RG 0.80 w 414.0 570.0 94.0 34.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 420.0 589.0 Td (Admin / Ops) Tj ET
+0 0 0 rg
+0.970 0.970 0.940 rg 0.350 0.450 0.550 RG 0.80 w 414.0 500.0 112.0 42.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 420.0 527.0 Td (cex-mgt-backend) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 420.0 515.0 Td (control plane) Tj ET
+0 0 0 rg
+0.920 0.960 1.000 rg 0.350 0.450 0.550 RG 0.80 w 66.0 455.0 118.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 72.0 490.0 Td (cex-order-service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 72.0 478.0 Td (CEX perpetual engine) Tj ET
+0 0 0 rg
+0.920 0.960 1.000 rg 0.350 0.450 0.550 RG 0.80 w 244.0 455.0 130.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 250.0 490.0 Td (surfv2-dex-svm-keeper) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 250.0 478.0 Td (SVM keeper + events) Tj ET
+0 0 0 rg
+0.980 0.950 0.920 rg 0.350 0.450 0.550 RG 0.80 w 424.0 455.0 124.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 430.0 490.0 Td (SVM user service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 430.0 478.0 Td (wallet + assets) Tj ET
+0 0 0 rg
+0.940 0.980 0.940 rg 0.350 0.450 0.550 RG 0.80 w 84.0 345.0 128.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 90.0 380.0 Td (cex-oracle-service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 90.0 368.0 Td (oracle + market data) Tj ET
+0 0 0 rg
+0.940 0.980 0.940 rg 0.350 0.450 0.550 RG 0.80 w 266.0 345.0 100.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 272.0 380.0 Td (Redis + Postgres) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 272.0 368.0 Td (state + config) Tj ET
+0 0 0 rg
+0.980 0.950 0.920 rg 0.350 0.450 0.550 RG 0.80 w 424.0 345.0 124.0 50.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 430.0 380.0 Td (SVM / EVM / Tron) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 430.0 368.0 Td (RPC + contracts) Tj ET
+0 0 0 rg
+0.980 0.950 0.920 rg 0.350 0.450 0.550 RG 0.80 w 424.0 270.0 124.0 42.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 430.0 297.0 Td (chain-listen-service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 430.0 285.0 Td (deposits + bridges) Tj ET
+0 0 0 rg
+0.970 0.970 0.940 rg 0.350 0.450 0.550 RG 0.80 w 186.0 245.0 170.0 42.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 192.0 272.0 Td (base + framework) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 192.0 260.0 Td (shared contracts/runtime) Tj ET
+0 0 0 rg
+0.970 0.970 0.940 rg 0.350 0.450 0.550 RG 0.80 w 72.0 245.0 86.0 42.0 re B 0 0 0 rg 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 8.5 Tf 78.0 272.0 Td (Helm + CI/CD) Tj ET
+0 0 0 rg
+0.150 0.150 0.150 RG 0.80 w 128.0 587.0 m 188.0 590.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 188.0 590.0 m 181.8 593.3 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 188.0 590.0 m 182.2 586.1 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 296.0 590.0 m 414.0 587.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 414.0 587.0 m 408.1 590.8 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 414.0 587.0 m 407.9 583.5 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 470.0 570.0 m 470.0 542.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 470.0 542.0 m 473.6 548.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 470.0 542.0 m 466.4 548.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 242.0 570.0 m 126.0 505.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 126.0 505.0 m 133.0 504.8 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 126.0 505.0 m 129.5 511.1 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 242.0 570.0 m 309.0 505.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 309.0 505.0 m 307.2 511.8 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 309.0 505.0 m 302.2 506.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 296.0 570.0 m 486.0 505.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 505.0 m 481.5 510.4 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 505.0 m 479.2 503.5 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 184.0 455.0 m 148.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 148.0 395.0 m 154.2 398.3 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 148.0 395.0 m 148.0 402.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 309.0 455.0 m 309.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 309.0 395.0 m 312.6 401.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 309.0 395.0 m 305.4 401.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 374.0 455.0 m 486.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 395.0 m 482.4 401.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 395.0 m 479.0 394.7 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 455.0 m 486.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 395.0 m 489.6 401.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 395.0 m 482.4 401.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 212.0 370.0 m 266.0 370.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 266.0 370.0 m 260.0 373.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 266.0 370.0 m 260.0 366.4 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 374.0 370.0 m 424.0 370.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 424.0 370.0 m 418.0 373.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 424.0 370.0 m 418.0 366.4 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 345.0 m 486.0 312.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 312.0 m 489.6 318.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 486.0 312.0 m 482.4 318.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 424.0 291.0 m 366.0 370.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 366.0 370.0 m 366.6 363.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 366.0 370.0 m 372.5 367.3 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 271.0 455.0 m 172.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 172.0 395.0 m 179.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 172.0 395.0 m 175.3 401.2 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 308.0 455.0 m 316.0 395.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 316.0 395.0 m 318.8 401.4 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 316.0 395.0 m 311.6 400.5 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 186.0 287.0 m 226.0 570.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 226.0 570.0 m 221.6 564.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 226.0 570.0 m 228.7 563.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 158.0 266.0 m 186.0 266.0 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 186.0 266.0 m 180.0 269.6 l S 0 0 0 RG
+0.150 0.150 0.150 RG 0.80 w 186.0 266.0 m 180.0 262.4 l S 0 0 0 RG
+0.350 0.350 0.350 rg
+BT /F1 9 Tf 42.0 206.0 Td (Status note: dashed/missing-code services are documented as gaps in the report, especially cex-user-service and several Helm-only apps.) Tj ET
+0 0 0 rg
+0.350 0.350 0.350 rg
+BT /F1 8 Tf 42.0 24.0 Td (Turboflow trading engine architecture brief | 2026-05-14 | page 1) Tj ET
+0 0 0 rg
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 13 0 R /F2 14 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 4804 >>
+stream
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 744.0 Td (Part Status) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 739.0 m 570.0 739.0 l S 0 0 0 RG
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 670.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 704.0 Td (API edge) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 704.0 Td (Implemented, broad surface) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 704.0 Td (cex-api-service fronts account, order, market,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 691.5 Td (asset, pool, and realtime APIs.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 614.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 648.0 Td (CEX perpetual engine) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 648.0 Td (Implemented, needs trace) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 648.0 Td (cex-order-service owns off-chain orders, fills,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 635.5 Td (positions, pools, risk, matcher, hedging.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 558.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 592.0 Td (SVM keeper) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 592.0 Td (Implemented, high criticality) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 592.0 Td (surfv2-dex-svm-keeper owns chain-backed) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 579.5 Td (execution, scanning, compensation,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 567.0 Td (prediction/event orders.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 502.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 536.0 Td (Prediction/event contracts) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 536.0 Td (Partially documented) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 536.0 Td (Risk/blocking code exists; source contract repo) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 523.5 Td (is not visible, generated IDL is visible.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 446.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 480.0 Td (User asset plane) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 480.0 Td (Implemented, split ownership) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 480.0 Td (SVM user service, chain listener, and Fireblocks) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 467.5 Td (SDK cover wallet, assets, approvals, withdraws.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 390.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 424.0 Td (Oracle/market data) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 424.0 Td (Implemented, ownership unclear) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 424.0 Td (cex-oracle-service is central; oracle-slippage) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 411.5 Td (overlaps or specializes in slippage/order books.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 334.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 368.0 Td (Admin/control) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 368.0 Td (Implemented, mapping incomplete) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 368.0 Td (cex-mgt-backend edits pair/risk/rule/sys config;) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 355.5 Td (field-to-consumer map is missing.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 278.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 312.0 Td (Shared foundation) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 312.0 Td (Implemented, central coupling) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 312.0 Td (base/framework define shared entities, RPC DTOs,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 299.5 Td (config, chain, DB/Redis/HTTP helpers.) Tj ET
+0 0 0 rg
+1.000 1.000 1.000 rg 0.850 0.850 0.850 RG 0.80 w 42.0 222.0 528.0 48.0 re B 0 0 0 rg 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 10 Tf 50.0 256.0 Td (Delivery platform) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 200.0 256.0 Td (Implemented, broader than code) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 256.0 Td (Helm references cloned services plus missing) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.5 Tf 334.0 243.5 Td (services like cex-user-service and sign-service.) Tj ET
+0 0 0 rg
+0.350 0.350 0.350 rg
+BT /F1 8 Tf 42.0 24.0 Td (Turboflow trading engine architecture brief | 2026-05-14 | page 2) Tj ET
+0 0 0 rg
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 13 0 R /F2 14 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 3753 >>
+stream
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 744.0 Td (Key Trade Flows) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 739.0 m 570.0 739.0 l S 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 722.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 722.0 Td (CEX perpetual order: client -> cex-api-service -> cex-order-service -> Postgres/Redis ->) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 708.5 Td (matcher/scheduler/risk/hedge -> client updates.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 693.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 693.0 Td (Surf/SVM order: client -> cex-api-service -> surfv2-dex-svm-keeper -> SVM RPC/program ->) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 679.5 Td (scanner/compensation -> DB/asset effects.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 664.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 664.0 Td (Prediction/event-contract order: API -> keeper prediction endpoint -> oracle) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 650.5 Td (freshness/slippage checks -> risk/blocking -> settlement/execution.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 635.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 635.0 Td (Market data: exchanges/DEX sources -> cex-oracle-service -> Redis/DB/WebSocket/HTTP ->) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 621.5 Td (API, order service, keeper.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 606.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 606.0 Td (Admin config: cex-mgt-backend/system endpoints -> sys_config/trade_config -> service) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 592.5 Td (caches and runtime behavior.) Tj ET
+0 0 0 rg
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 569.0 Td (High Severity Gaps / Issues) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 564.0 m 570.0 564.0 l S 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 547.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 547.0 Td (Missing source repos: runtime charts and API routes reference services not visible) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 533.5 Td (locally, especially cex-user-service.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 518.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 518.0 Td (Implicit service contracts: base/rpc wrappers, route handlers, and DB config form) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 504.5 Td (contracts without one generated map.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 489.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 489.0 Td (Runtime config governance: trading behavior depends on DB-backed sys_config and) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 475.5 Td (trade_config JSON values not captured as canonical production config.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 460.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 460.0 Td (Prediction/event lifecycle: contract source, settlement state machine, oracle checks,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 446.5 Td (risk gates, and asset effects need a dedicated trace.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 431.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 431.0 Td (CEX order lifecycle: create/fill/position/liquidation/client-update path needs code-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 417.5 Td (level documentation across API, RPC, matcher, and schedulers.) Tj ET
+0 0 0 rg
+0.350 0.350 0.350 rg
+BT /F1 8 Tf 42.0 24.0 Td (Turboflow trading engine architecture brief | 2026-05-14 | page 3) Tj ET
+0 0 0 rg
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 13 0 R /F2 14 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 3705 >>
+stream
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 744.0 Td (Medium Gaps) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 739.0 m 570.0 739.0 l S 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 722.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 722.0 Td (Oracle/slippage overlap: cex-oracle-service and oracle-slippage share shape and may) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 708.5 Td (diverge in pricing or slippage logic.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 693.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 693.0 Td (WebSocket ownership: API, oracle, order, and keeper expose event paths without a central) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 679.5 Td (topic and payload registry.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 664.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 664.0 Td (Data model ownership: order/fill/position/pool/asset/cashbook tables are scattered) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 650.5 Td (across READMEs, models, DAOs, and migrations.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 635.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 635.0 Td (Deployment map: Helm app inventory is broader than visible code, and) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 621.5 Td (ports/health/metrics/values ownership is not centrally extracted.) Tj ET
+0 0 0 rg
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 594.0 Td (Likely Bottlenecks) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 589.0 m 570.0 589.0 l S 0 0 0 RG
+0.040 0.200 0.350 rg
+BT /F2 9.5 Tf 42.0 572.0 Td (Oracle fan-out:) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 572.0 Td (API, order service, and keeper all depend on oracle price/kline/ticker) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 559.2 Td (data. Stale or delayed oracle data can block or misprice both CEX and) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 546.4 Td (event-contract trading.) Tj ET
+0 0 0 rg
+0.040 0.200 0.350 rg
+BT /F2 9.5 Tf 42.0 527.6 Td (Shared Redis/Postgres:) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 527.6 Td (Order state, config, price caches, balances, and risk accounting share) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 514.8 Td (DB/Redis dependencies. Contention or cache drift can affect trading and) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 502.0 Td (balances.) Tj ET
+0 0 0 rg
+0.040 0.200 0.350 rg
+BT /F2 9.5 Tf 42.0 483.2 Td (base coupling:) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 483.2 Td (Most services import shared entities, enums, RPC DTOs, config, and chain) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 470.4 Td (helpers. Cross-repo changes have a wide blast radius.) Tj ET
+0 0 0 rg
+0.040 0.200 0.350 rg
+BT /F2 9.5 Tf 42.0 451.6 Td (Keeper chain dependency:) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 451.6 Td (SVM RPC, program/IDL compatibility, scanner, and compensation are) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 438.8 Td (critical. RPC degradation can leave orders in intermediate chain) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 426.0 Td (statuses.) Tj ET
+0 0 0 rg
+0.040 0.200 0.350 rg
+BT /F2 9.5 Tf 42.0 407.2 Td (Runtime config opacity:) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 407.2 Td (Behavior switches live in DB config, so incidents may be hard to) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 8.8 Tf 157.0 394.4 Td (reproduce from Git alone.) Tj ET
+0 0 0 rg
+0.350 0.350 0.350 rg
+BT /F1 8 Tf 42.0 24.0 Td (Turboflow trading engine architecture brief | 2026-05-14 | page 4) Tj ET
+0 0 0 rg
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 13 0 R /F2 14 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 3562 >>
+stream
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 744.0 Td (Recommended Next Actions) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 739.0 m 570.0 739.0 l S 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 722.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 722.0 Td (Build service-contracts.md: inventory base/rpc clients, HTTP routes, ports, and runtime) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 708.0 Td (URLs.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 692.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 692.0 Td (Build config-key-register.md: inventory sys_config and trade_config keys, owners,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 678.0 Td (defaults, consumers, and admin fields.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 662.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 662.0 Td (Trace cex-order-lifecycle.md: API request through CEX risk, DB writes, matcher, fills,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 648.0 Td (positions, and client updates.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 632.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 632.0 Td (Trace svm-keeper-lifecycle.md: API request through keeper, SVM submit/confirm/finish,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 618.0 Td (scanner, compensation, and asset effects.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 602.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 602.0 Td (Trace prediction-event-contracts.md: oracle checks, slippage, signal/band risk,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 588.0 Td (settlement lifecycle, and contract artifacts.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 10 Tf 42.0 572.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 10 Tf 54.0 572.0 Td (Map missing Helm apps to source repos or mark them external/runtime-only.) Tj ET
+0 0 0 rg
+0.050 0.200 0.360 rg
+BT /F2 15 Tf 42.0 544.0 Td (Source Basis) Tj ET
+0 0 0 rg
+0.720 0.780 0.840 RG 0.60 w 42.0 539.0 m 570.0 539.0 l S 0 0 0 RG
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 522.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 522.0 Td (Turboflow-HQ ops/repo-index.json and specs/trade-system/*.md at main commit fbdf588.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 506.5 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 506.5 Td (Visible local repos: cex-api-service, cex-order-service, surfv2-dex-svm-keeper,) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 493.0 Td (surfv2-dex-svm-user-service, cex-oracle-service, oracle-slippage, cex-chain-listen-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 479.5 Td (service, cex-mgt-backend, base, framework, amber-helm-charts, amber-cicd-lib.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 464.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 464.0 Td (Risk-management wiki is present at current main and was referenced for overlapping risk-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 450.5 Td (control context.) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F2 9.5 Tf 42.0 435.0 Td (-) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 435.0 Td (Limitation: non-visible runtime services referenced by Helm/API routing were treated as) Tj ET
+0 0 0 rg
+0.000 0.000 0.000 rg
+BT /F1 9.5 Tf 54.0 421.5 Td (gaps, not inferred as implemented.) Tj ET
+0 0 0 rg
+0.350 0.350 0.350 rg
+BT /F1 8 Tf 42.0 24.0 Td (Turboflow trading engine architecture brief | 2026-05-14 | page 5) Tj ET
+0 0 0 rg
+endstream
+endobj
+13 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+14 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 15
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000140 00000 n
+0000000278 00000 n
+0000008470 00000 n
+0000008608 00000 n
+0000013464 00000 n
+0000013602 00000 n
+0000017407 00000 n
+0000017546 00000 n
+0000021304 00000 n
+0000021444 00000 n
+0000025059 00000 n
+0000025130 00000 n
+trailer
+<< /Size 15 /Root 1 0 R >>
+startxref
+25206
+%%EOF
