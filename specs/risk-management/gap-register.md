@@ -19,6 +19,7 @@ This register tracks drift between policy, implementation, docs, tests, runtime 
 | `RM-GAP-007` | Low | Prediction market | `RM-PM-BAND-001` | Prediction config doc contradicts itself on `band_width_sec`. | JSON uses `5`; prose says `180`. | Keeper owner | Correct doc after canonical band width is confirmed. | Open |
 | `RM-GAP-008` | Medium | Runtime config | `RM-CONFIG-ADMIN-001` | Admin/DB/sys_config edit surfaces for risk policy are not mapped. | Current index only names likely repos. | Admin backend owner / CTO | Inventory fields, owners, and release gates. | Open |
 | `RM-GAP-009` | Medium | Monitoring | `RM-OPS-MON-001` | Metrics/alerts/runbooks are not fully inventoried. | v3.0 specifies metrics and alerts; implementation evidence not yet mapped. | Platform owner | Inventory emitted metrics, alerts, and runbook paths. | Open |
+| `RM-GAP-010` | Medium | CEX | `RM-CEX-MARGIN-002`, `RM-CEX-LEV-001`, `RM-CEX-MMR-001` | New exchange margin/leverage PDF proposes tier max leverage and position caps that differ from current CEX risk policy and implementation. | PDF proposes Tier 1/2/3/4 max leverage `200x/100x/50x/20x` and caps `$10m/$2m/$1m/$500k`; current branch rules/code use different CEX leverage and MMR tables. | CTO / Order-service owner | Decide whether PDF is future canonical policy, replacement policy, or reference-only artifact. | Open |
 
 ## Closed Gaps
 

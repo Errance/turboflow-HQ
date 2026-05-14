@@ -22,6 +22,7 @@ For the CTO governance view, start with [README.md](README.md), then use [policy
 | CEX max leverage service doc | [`cex-order-service/docs/max_leverage_service_README.md`](../../../cex-order-service/docs/max_leverage_service_README.md) | Local repo doc | Covers spread, choppiness, funding-rate, stock-market-hours, MMR, max order size, and leverage downgrade logic. |
 | Oracle slippage calculation doc | [`oracle-slippage/docs/design/SLIPPAGE_CALCULATION_LOGIC.md`](../../../oracle-slippage/docs/design/SLIPPAGE_CALCULATION_LOGIC.md) | Local repo doc | Covers order-book to slippage pipeline, fixed and max slippage, max natural depth, Redis/DB/metric updates, and API consumption. |
 | CEX risk-control rules doc | `https://github.com/turboflow-xyz/cex-order-service/blob/feature/main_fix/docs/RISK_CONTROL_RULES.md` | Verified on `origin/feature/main_fix` | Branch refreshed as `thomson-yee`; file exists at `cex-order-service` commit `19dee65`. Covers Tier Tag, PM/RM, Profit Share, max leverage, weekend mode, stock close, MMR/order limits, buffer rate, and orderbook slippage. |
+| Exchange margin/leverage framework PDF | [`source-assets/exchange_margin_leverage_framework_10m_2m_1m_500k.pdf`](source-assets/exchange_margin_leverage_framework_10m_2m_1m_500k.pdf) | Candidate source asset | 4-tier exchange perpetuals margin/leverage framework with max position caps `10m/2m/1m/500k`, formulaic IMR/MMR, and maintenance deduction. Not yet canonical because it differs from current CEX risk rules. |
 
 ## Theme Areas
 
@@ -136,22 +137,24 @@ These are evidence-backed issues found during the first index review. They shoul
 | Medium | CEX risk docs | `cex-order-service/docs/max_leverage_service_README.md` is stale relative to current code and `RISK_CONTROL_RULES.md` for spread-based max leverage. | README says `3 <= spread < 7` returns `500x` and `spread >= 7` returns `200x`; current `max_leverage_service.go` and branch `RISK_CONTROL_RULES.md` use `200x` and `100x`. | Treat `RISK_CONTROL_RULES.md` plus code as newer; update or deprecate the stale README. |
 | Low | CEX risk docs | `RISK_CONTROL_RULES.md` links to `RISK_CONTROL_RULES_EN.md`, but the branch `docs/` tree does not contain that English file. | `origin/feature/main_fix` docs tree lists `RISK_CONTROL_RULES.md` but no `RISK_CONTROL_RULES_EN.md`. | Remove the link or add the English document if bilingual docs are required. |
 | Low | Prediction-market config doc | The `band_risk.band_width_sec` text conflicts with its JSON example. | JSON example uses `band_width_sec: 5`; prose says current value is `180` and describes a 3-minute band. | Correct the config doc once canonical band width is confirmed. |
+| Medium | CEX margin/leverage policy | New exchange margin/leverage PDF proposes a 4-tier framework with max leverage `200x/100x/50x/20x` and caps `10m/2m/1m/500k`, which differs from the current CEX risk rules and implementation. | `source-assets/exchange_margin_leverage_framework_10m_2m_1m_500k.pdf`; current `RISK_CONTROL_RULES.md` and `max_leverage_service.go`. | Decide whether the PDF is a candidate future policy, a replacement policy, or a reference-only artifact. |
 
 ## Known Gaps And Follow-Ups
 
 1. Decide whether HQ should vendor or mirror the branch-only `cex-order-service/docs/RISK_CONTROL_RULES.md` source, or keep it as an external branch reference.
-2. Decide whether v3.0 requires independent volatility regimes per duration, then align keeper code or update the product spec.
-3. Reconcile default risk weights across sources:
+2. Decide whether the new exchange margin/leverage PDF supersedes current CEX risk rules or remains a candidate/reference artifact.
+3. Decide whether v3.0 requires independent volatility regimes per duration, then align keeper code or update the product spec.
+4. Reconcile default risk weights across sources:
    - v3.0 spec defaults: `30s=4/1`, `1m=1.5/0.5`, `5m=0.6/0.2`, `15m=0.2/0.05`, `1h=0.1/0.02`.
    - Prediction-market config doc example includes `60s=2/0.7` and `180s=1.2/0.4`.
-4. Reconcile volatility threshold defaults:
+5. Reconcile volatility threshold defaults:
    - v3.0 spec and keeper normalization default to `0.10`.
    - Prediction-market config doc example uses `0.25`.
-5. Fix or clarify the prediction-market config doc text for `band_risk.band_width_sec`: the JSON example uses `5`, while one description line says `180`.
-6. Decide whether Redis `INCRBYFLOAT` plus after-the-fact rollback is acceptable for the required atomicity under multi-instance concurrency, or whether Redis scripting / WATCH-MULTI / DB row locking is required.
-7. Inventory metrics and alerts actually emitted for band exposure, remaining capacity, rejection counts, stale volatility history, and cache misses.
-8. Map admin UI / DB fields that edit prediction-market `band_risk`, CEX pair risk, leverage, MMR, and slippage controls.
-9. Add focused tests or test index entries for:
+6. Fix or clarify the prediction-market config doc text for `band_risk.band_width_sec`: the JSON example uses `5`, while one description line says `180`.
+7. Decide whether Redis `INCRBYFLOAT` plus after-the-fact rollback is acceptable for the required atomicity under multi-instance concurrency, or whether Redis scripting / WATCH-MULTI / DB row locking is required.
+8. Inventory metrics and alerts actually emitted for band exposure, remaining capacity, rejection counts, stale volatility history, and cache misses.
+9. Map admin UI / DB fields that edit prediction-market `band_risk`, CEX pair risk, leverage, MMR, and slippage controls.
+10. Add focused tests or test index entries for:
    - accept/reject boundary at cap
    - UP/DOWN offset
    - special period overrides

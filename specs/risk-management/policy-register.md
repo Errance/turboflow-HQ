@@ -27,6 +27,7 @@ This register is the central control view for current Turboflow risk-management 
 | `RM-CEX-PMRM-001` | CEX | PM/RM calculation | v0.1 branch rules | Draft | Implemented | `RISK_CONTROL_RULES.md`; pair risk service docs | Runtime config surface not mapped. |
 | `RM-CEX-LEV-001` | CEX | Max leverage from spread, choppiness, funding, market hours | v0.1 branch rules | Draft | Implemented with doc drift | `RISK_CONTROL_RULES.md`; `max_leverage_service.go` | Older README has stale leverage values. |
 | `RM-CEX-MMR-001` | CEX | MMR tiers, max order size, holding limits | v0.1 branch rules | Draft | Implemented | `RISK_CONTROL_RULES.md`; `max_leverage_service.go` | Need runtime evidence and admin config map. |
+| `RM-CEX-MARGIN-002` | CEX | Candidate 4-tier margin/leverage cap framework | Candidate PDF | Draft | Not started | `source-assets/exchange_margin_leverage_framework_10m_2m_1m_500k.pdf` | Needs canonicality decision versus current CEX risk rules. |
 | `RM-CEX-SLIP-001` | CEX | Buffer rate and orderbook slippage controls | v0.1 branch rules | Draft | Implemented | `RISK_CONTROL_RULES.md`; `oracle-slippage` docs | Need metrics/runtime evidence. |
 | `RM-DATA-SLIP-001` | Data inputs | Fixed/max slippage and max natural depth | v0.1 indexed | Draft | Implemented | `oracle-slippage/docs/design/SLIPPAGE_CALCULATION_LOGIC.md` | Need consumer map and freshness checks. |
 | `RM-CONFIG-ADMIN-001` | Runtime config | Admin/DB/sys_config policy editing surface | v0.1 placeholder | Draft | Unknown | Not yet mapped | Inventory required. |
