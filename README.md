@@ -18,6 +18,7 @@ This repository is the Magic Flow orchestration context for Turboflow.
 - `ops/repo-index.json`: discovered organization repositories and sync state
 - `ops/workers.json`: active and historical worker state
 - `specs/technical-assets/`: reviewed technical assets and internal operating guides
+- `specs/risk-management/`: risk policy wiki, control register, implementation status, and gap register
 - `ops/infra.json`: infrastructure registry
 - `prd/`: PRDs for decomposition into Linear work
 - `specs/`: architecture, API, and data model references
