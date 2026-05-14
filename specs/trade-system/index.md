@@ -79,3 +79,4 @@ For the current organization-wide topology, start with [ADR 0001: Current Turbof
 - [repo-component-map.md](repo-component-map.md): repo-by-repo component and source index.
 - [gap-register.md](gap-register.md): known gaps, missing repos, stale docs, and next investigation tasks.
 - [reports/2026-05-14-trading-engine-architecture-brief.md](reports/2026-05-14-trading-engine-architecture-brief.md): brief diagram report with part status, gaps, and likely bottlenecks. PDF: [reports/2026-05-14-trading-engine-architecture-brief.pdf](reports/2026-05-14-trading-engine-architecture-brief.pdf).
+- [reports/2026-05-14-keeper-service-architecture-study.md](reports/2026-05-14-keeper-service-architecture-study.md): focused keeper-service architecture study covering coupling, statefulness, cross-repo topology, scaling limits, gaps, bottlenecks, and migration directions.
