@@ -21,6 +21,7 @@ This HQ repository coordinates the Magic Flow workflow for Turboflow repositorie
 
 - `prd/`: product requirements and decomposition inputs
 - `specs/`: architecture, API, and domain references
+- `specs/technical-assets/`: reviewed technical assets and operating guides
 - `releases/`: release notes and changelog outputs
 - `ops/repos.json`: registered repos and project routing data
 - `ops/policy.json`: project account and oversight policy
