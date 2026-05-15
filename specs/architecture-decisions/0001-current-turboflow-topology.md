@@ -12,18 +12,18 @@ The visible GitHub org slice has 14 repos. The Helm deployment repo references 4
 
 ## Functional Positioning
 
-| Layer | Repos | Role |
-|------|-------|------|
-| Shared foundation | `framework`, `base`, `turboflow-fireblocks-sdk-go` | HTTP/server, DB, Redis, monitoring, shared constants/entities, sys_config access, RPC clients, chain clients, Fireblocks integration |
-| Public/API edge | `cex-api-service` | User-facing HTTP and WebSocket API; account, market, pool, task, third-party, inbox, campaign, and statistics surfaces |
-| Admin/control | `cex-mgt-backend` | Admin backend, finance/risk/rule/user management, migrations, monitoring, pair/service operations |
-| Market data / oracle | `cex-oracle-service`, `oracle-slippage` | Exchange/DEX data ingestion, token/pair pricing, kline/ticker WebSockets, slippage and pair validation |
-| CEX/order execution | `cex-order-service` | Order, pool, reward, risk, statistics, matcher/scheduler services; consumes oracle price WebSocket |
-| DEX/SVM execution | `surfv2-dex-svm-keeper` | Solana/SVM keeper execution, pool/order operations, scanner, voucher/dreamfund flows, chain RPC interaction |
-| DEX asset/user plane | `surfv2-dex-svm-user-service` | User wallet, asset, withdraw, bridge, Fireblocks/provider tx callback, token approval APIs |
-| Chain ingestion | `cex-chain-listen-service` | EVM/Solana/Tron deposit and DEX bridge/listen services; token sync; chain event HTTP API |
-| New domain app | `turbo-soccer-book-service` | Standalone soccer book/betting domain with mock-first match, market, bet, settle, account, and chain modules |
-| Delivery platform | `amber-cicd-lib`, `amber-helm-charts` | Reusable GitHub Actions workflow, ECR image publishing, Helm values updates, ArgoCD deployment charts |
+| Layer                | Repos                                              | Role                                                                                                                                 |
+| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Shared foundation    | `framework`, `base`, `turboflow-fireblocks-sdk-go` | HTTP/server, DB, Redis, monitoring, shared constants/entities, sys_config access, RPC clients, chain clients, Fireblocks integration |
+| Public/API edge      | `cex-api-service`                                  | User-facing HTTP and WebSocket API; account, market, pool, task, third-party, inbox, campaign, and statistics surfaces               |
+| Admin/control        | `cex-mgt-backend`                                  | Admin backend, finance/risk/rule/user management, migrations, monitoring, pair/service operations                                    |
+| Market data / oracle | `cex-oracle-service`, `oracle-slippage`            | Exchange/DEX data ingestion, token/pair pricing, kline/ticker WebSockets, slippage and pair validation                               |
+| CEX/order execution  | `cex-order-service`                                | Order, pool, reward, risk, statistics, matcher/scheduler services; consumes oracle price WebSocket                                   |
+| DEX/SVM execution    | `surfv2-dex-svm-keeper`                            | Solana/SVM keeper execution, pool/order operations, scanner, voucher/dreamfund flows, chain RPC interaction                          |
+| DEX asset/user plane | `surfv2-dex-svm-user-service`                      | User wallet, asset, withdraw, bridge, Fireblocks/provider tx callback, token approval APIs                                           |
+| Chain ingestion      | `cex-chain-listen-service`                         | EVM/Solana/Tron deposit and DEX bridge/listen services; token sync; chain event HTTP API                                             |
+| New domain app       | `turbo-soccer-book-service`                        | Standalone soccer book/betting domain with mock-first match, market, bet, settle, account, and chain modules                         |
+| Delivery platform    | `amber-cicd-lib`, `amber-helm-charts`              | Reusable GitHub Actions workflow, ECR image publishing, Helm values updates, ArgoCD deployment charts                                |
 
 ## Topology
 
