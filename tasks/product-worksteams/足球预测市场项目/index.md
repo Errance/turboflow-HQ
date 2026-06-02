@@ -27,9 +27,11 @@ https://tf-team-vbfwtqkg.atlassian.net/wiki/spaces/T/pages/28246216/Vendor?atlOr
 | [用户端API文档-football-markets.md](<用户端API文档-football-markets.md>) | 内部抓取整理的用户端 API 记录 |
 | [External Developer Handover - Football Prediction Market User API EN.md](<External Developer Handover - Football Prediction Market User API EN.md>) | 可交付外部开发者的用户侧赛事、盘口与实时赔率 API handover |
 | [../../../../qa-grocery/products/football-prediction-market/simulators/polymarket-quote-bridge/README.md](<../../../../qa-grocery/products/football-prediction-market/simulators/polymarket-quote-bridge/README.md>) | Polymarket quote bridge API test 已迁移到 `qa-grocery`：从 Polymarket 拉取 orderbook 价格并按 TF vendor feed v2.2.4 单 outcome 帧推送 |
+| [../../../../qa-grocery/products/football-prediction-market/api-tests/sig-vendor-feed/README.md](<../../../../qa-grocery/products/football-prediction-market/api-tests/sig-vendor-feed/README.md>) | SIG football vendor feed legacy API tests 已迁移到 `qa-grocery`：包含 SIT/UAT vendor feed probes、continuous odds pusher、pytest cases 与 captured market fixtures |
 
 ## Progress
 
+- [x] `2026-06-02 10:35 +08` 将 legacy SIG football vendor API tests 迁移到 `qa-grocery/products/football-prediction-market/api-tests/sig-vendor-feed/`，并清理为未来 API / simulator / testing cases 的统一 repo 入口。
 - [x] `2026-06-02 09:45 +08` 新增 Polymarket quote bridge API test，后续已迁移到 `qa-grocery/products/football-prediction-market/simulators/polymarket-quote-bridge/`：连接 TF vendor feed，读取 `market_info`，按 `polymarket_event_slug` / `event_slug` 匹配 Polymarket market slug，拉取 Gamma / CLOB 价格并推送 `buy_decimal_odds` / `sell_decimal_odds` 单 outcome quote frame。
 - [x] `2026-06-01 13:26 +08` 根据足球预测市场 v2.2.4 CN API 文档覆盖 EN 翻译，并同步 `match_id`、`polymarket_event_slug`、盘口 `status`、fallback `event_slug`、SLA 与字段词典；同步更新 v2.2 索引。
 - [x] `2026-06-01 10:31 +08` 新增 external developer handover：整理用户侧 REST 赛事 / 盘口接口、`ws/rfq` 实时赔率订阅、heartbeat 与前端接入流程。
