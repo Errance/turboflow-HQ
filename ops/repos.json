@@ -173,17 +173,29 @@
       "test_cmd": "TBD",
       "lint_cmd": "TBD"
     },
-    {
-      "name": "amber-cicd-lib",
-      "github": "turboflow-xyz/amber-cicd-lib",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/amber-cicd-lib",
+        {
+            "name": "amber-cicd-lib",
+            "github": "turboflow-xyz/amber-cicd-lib",
+            "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/amber-cicd-lib",
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
-      "github_account": "thomson-yee",
-      "stack": "github-actions-library",
-      "test_cmd": "TBD",
-      "lint_cmd": "TBD"
-    }
-  ]
+            "github_account": "thomson-yee",
+            "stack": "github-actions-library",
+            "test_cmd": "TBD",
+            "lint_cmd": "TBD"
+        },
+        {
+            "name": "qa-grocery",
+            "github": "thomson-yee/qa-grocery",
+            "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/qa-grocery",
+            "linear_team_id": "TBD",
+            "linear_team_key": "TBD",
+            "linear_project_id": "TBD",
+            "github_account": "thomson-yee",
+            "stack": "qa-assets",
+            "test_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs",
+            "lint_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs"
+        }
+    ]
 }

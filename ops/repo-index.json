@@ -225,6 +225,20 @@
       "depends_on": [],
       "deployment": "github-actions",
       "workflows": [".github/workflows/build-golang.yml"]
+    },
+    {
+      "name": "qa-grocery",
+      "full_name": "thomson-yee/qa-grocery",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/qa-grocery",
+      "default_branch": "main",
+      "head": "82381a6",
+      "visibility": "private",
+      "archived": false,
+      "language": "Markdown/Python/JavaScript",
+      "stack": "qa-assets",
+      "go_module": null,
+      "depends_on": [],
+      "deployment": "qa-docs-and-api-tests"
     }
   ]
 }

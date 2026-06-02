@@ -29,6 +29,7 @@ This document summarizes repository discovery for the `turboflow-xyz` GitHub org
 | `turboflow-fireblocks-sdk-go` | Go library | `github.com/turboflow-xyz/turboflow-fireblocks-sdk-go` | `/Users/wenqingyu/Documents/workspace/turboflow/turboflow-fireblocks-sdk-go` |
 | `amber-helm-charts` | Helm charts | ArgoCD deployment charts | `/Users/wenqingyu/Documents/workspace/turboflow/amber-helm-charts` |
 | `amber-cicd-lib` | GitHub Actions library | reusable CI/CD workflows | `/Users/wenqingyu/Documents/workspace/turboflow/amber-cicd-lib` |
+| `qa-grocery` | QA assets | `thomson-yee/qa-grocery`; product API docs, test cases, and simulators for football prediction market and event contracts | `/Users/wenqingyu/Documents/workspace/turboflow/qa-grocery` |
 
 ## Initial Dependency Signals
 
