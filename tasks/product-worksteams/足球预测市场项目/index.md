@@ -16,7 +16,7 @@ https://tf-team-vbfwtqkg.atlassian.net/wiki/spaces/T/pages/28246216/Vendor?atlOr
 | 版本 | 状态 | 目录 | 进度 / 说明 |
 | --- | --- | --- | --- |
 | v2.1 | Pending review | [v2.1 - SIG odds data API/Index.md](<v2.1 - SIG odds data API/Index.md>) | 需求文档 TBD；CN API Pending review；EN API Pending review。SIG football odds data API，新增 `polymarket_event_id` |
-| v2.2 | Ready for review | [v2.2 - 多Vendor赔率路由方案/Index.md](<v2.2 - 多Vendor赔率路由方案/Index.md>) | 需求文档 Done；CN API Ready for review；EN API Ready for review。Football multi-vendor quote book、best quote routing、5 分钟报价有效期、Vendor `best_quote` 订阅；当前 v2.2.4 API 文档覆盖 SIG odds WebSocket stream、REST fallback、Ed25519 鉴权、buy/sell 双边赔率、Polymarket `events[]` / slug 快照、`polymarket_event_slug` 精确匹配字段、fallback `event_slug` 规则与 WS 单 outcome 推送；v2.2.2 patch TODO：按 trading pair / market 配置单笔与 rolling window 交易量保护 |
+| v2.2 | Ready for review | [v2.2 - 多Vendor赔率路由方案/Index.md](<v2.2 - 多Vendor赔率路由方案/Index.md>) | 需求文档 Done；CN API Ready for review；EN API Ready for review。Football multi-vendor quote book、best quote routing、5 分钟报价有效期、Vendor `best_quote` 订阅；当前 v2.2.4 API 文档覆盖 SIG odds WebSocket stream、REST fallback、UAT endpoint `api.turboflow-test.xyz`、Ed25519 鉴权、buy/sell 双边赔率、Polymarket `events[]` / slug 快照、`polymarket_event_slug` 精确匹配字段、fallback `event_slug` 规则与 WS 单 outcome 推送；v2.2.2 patch TODO：按 trading pair / market 配置单笔与 rolling window 交易量保护 |
 | v2.3 | Draft | [v2.3 - 二级分销池渠道隔离升级/Index.md](<v2.3 - 二级分销池渠道隔离升级/Index.md>) | 二级分销池渠道隔离升级。渠道独立身份域、独立资金域、足球预测渠道 markup、分销池路由开关、渠道收入与池子盈亏对账 |
 
 ## 项目背景
@@ -31,6 +31,7 @@ https://tf-team-vbfwtqkg.atlassian.net/wiki/spaces/T/pages/28246216/Vendor?atlOr
 
 ## Progress
 
+- [x] `2026-06-03 16:05 +08` 统一足球预测市场 API 文档与 external developer handover 的外部 UAT endpoint 为 `api.turboflow-test.xyz`；内部 SIT 用户端抓取记录更新为 `sit-api.turboflow-test.xyz`。
 - [x] `2026-06-02 10:35 +08` 将 legacy SIG football vendor API tests 迁移到 `qa-grocery/products/football-prediction-market/api-tests/sig-vendor-feed/`，并清理为未来 API / simulator / testing cases 的统一 repo 入口。
 - [x] `2026-06-02 09:45 +08` 新增 Polymarket quote bridge API test，后续已迁移到 `qa-grocery/products/football-prediction-market/simulators/polymarket-quote-bridge/`：连接 TF vendor feed，读取 `market_info`，按 `polymarket_event_slug` / `event_slug` 匹配 Polymarket market slug，拉取 Gamma / CLOB 价格并推送 `buy_decimal_odds` / `sell_decimal_odds` 单 outcome quote frame。
 - [x] `2026-06-01 13:26 +08` 根据足球预测市场 v2.2.4 CN API 文档覆盖 EN 翻译，并同步 `match_id`、`polymarket_event_slug`、盘口 `status`、fallback `event_slug`、SLA 与字段词典；同步更新 v2.2 索引。
