@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>odds-oracle-vendor-integration-proposal</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="odds-oracle-vendor-integration-proposal.css" />
+</head>
+<body>
+<h1
+id="turboflow-event-contract-odds-oracle-liquidity-integration">TurboFlow
+Event Contract Odds Oracle &amp; Liquidity Integration</h1>
+<p><strong>Tentative integration proposal</strong><br />
+For liquidity providers and odds quotation vendors</p>
+<p><strong>Version:</strong> Draft v0.1<br />
+<strong>Date:</strong> May 18, 2026<br />
+<strong>Scope:</strong> Event contract up/down markets, vendor liquidity
+pools, and odds quote ingestion.</p>
+<p><strong>Important note:</strong> This document is a proof-of-concept
+proposal for technical validation. The final production API schema,
+authentication method, routing thresholds, and operational limits may
+change during implementation.</p>
+<h2 id="how-liquidity-odds-quotes-and-best-bid-routing-work">1. How
+Liquidity, Odds Quotes, and Best-Bid Routing Work</h2>
+<p>TurboFlow hosts event contract markets such as <strong>BTC
+up/down</strong> and <strong>ETH up/down</strong> over fixed durations
+including <code>30s</code>, <code>1m</code>, <code>3m</code>,
+<code>5m</code>, <code>15m</code>, and <code>1h</code>.</p>
+<p>At order time, TurboFlow links three pieces of information:</p>
+<ul>
+<li><strong>Odds quote:</strong> the return rate offered for up/down
+outcomes, for example <code>BTC-5m-up = 0.80</code>.</li>
+<li><strong>Liquidity pool:</strong> the vendor-specific pool/account
+that backs the order and carries settlement PnL.</li>
+<li><strong>Routing decision:</strong> the selected vendor quote and
+pool for the order, ensuring the vendor that offered the odds also backs
+the settlement.</li>
+</ul>
+<p>In short:</p>
+<pre class="text"><code>Vendor quote wins
+  -&gt; TurboFlow locks the selected odds into the order
+  -&gt; order is routed to that vendor&#39;s liquidity pool/account
+  -&gt; settlement uses the locked odds and selected pool</code></pre>
+<h3 id="best-quote-routing">Best-Quote Routing</h3>
+<p>TurboFlow will maintain a quote book of valid quotes from all enabled
+vendors. For each order request, TurboFlow selects the best available
+route based on:</p>
+<ol type="1">
+<li>Market and duration, for example <code>BTC-5m</code>.</li>
+<li>Direction, either up or down.</li>
+<li>Freshness of the vendor quote.</li>
+<li>Vendor and market permission.</li>
+<li>Vendor pool health and available capacity.</li>
+<li>Routing strategy.</li>
+</ol>
+<p>The default tentative strategy is <strong>highest valid return rate
+wins</strong>. Future strategies may include sticky routing windows,
+threshold-based switching, vendor priority, capacity-aware routing, or
+risk-adjusted routing.</p>
+<h2 id="how-to-onboard-as-a-liquidity-provider">2. How to Onboard as a
+Liquidity Provider</h2>
+<p>Liquidity providers follow the standard TurboFlow user liquidity pool
+creation procedure:</p>
+<ol type="1">
+<li>Log in to <code>tf.xyz</code> and create an account.</li>
+<li>Complete the fund deposit.</li>
+<li>Share the account UID with TurboFlow.</li>
+<li>TurboFlow creates the provider’s dedicated liquidity pool.</li>
+<li>Once the pool is enabled and mapped, the vendor can become eligible
+for routed order flow.</li>
+</ol>
+<p>Operational notes:</p>
+<ul>
+<li>A vendor cannot win routing unless its pool is enabled and
+healthy.</li>
+<li>TurboFlow may apply quote freshness, exposure, and capacity
+limits.</li>
+<li>Orders will persist the selected vendor, pool, quote, odds, and
+routing decision for audit.</li>
+<li>If no valid vendor quote is available, TurboFlow may reject the
+order or use a configured fallback policy.</li>
+</ul>
+<h2 id="how-odds-vendors-send-quotes-to-turboflow">3. How Odds Vendors
+Send Quotes to TurboFlow</h2>
+<p>TurboFlow will provide a vendor-facing WebSocket endpoint for odds
+push:</p>
+<pre class="text"><code>wss://&lt;turboflow-domain&gt;/ws/vendor/predict-quotes</code></pre>
+<p>Authentication is still under final security review. The tentative
+phase-one option is HMAC-style handshake headers:</p>
+<ul>
+<li><code>X-API-KEY</code>: Vendor API key.</li>
+<li><code>X-API-TS</code>: Unix timestamp in milliseconds.</li>
+<li><code>X-API-SIGN</code>: HMAC signature over
+<code>apiKey + timestamp</code>.</li>
+</ul>
+<p>Tentative signature:</p>
+<pre class="text"><code>X-API-SIGN = HMAC_SHA256(secret, apiKey + timestamp)</code></pre>
+<p>The message schema below is tentative and provided to validate the
+integration direction. TurboFlow may adjust field names, acknowledgement
+format, validation rules, or authentication details before production
+release.</p>
+<h3 id="quote-push-message">Quote Push Message</h3>
+<p>Vendors send quote batches whenever odds change.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;quote_batch&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;vendor-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sent_at&quot;</span><span class="fu">:</span> <span class="dv">1757908892351</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;quotes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;market&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m&quot;</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;outcomes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span> <span class="dt">&quot;outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;up&quot;</span><span class="fu">,</span> <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="st">&quot;0.80&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span> <span class="dt">&quot;outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;down&quot;</span><span class="fu">,</span> <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="st">&quot;0.79&quot;</span> <span class="fu">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="acknowledgement">Acknowledgement</h3>
+<p>TurboFlow returns an acknowledgement after validation.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ack&quot;</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;vendor-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accepted&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;rejected&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;server_ts&quot;</span><span class="fu">:</span> <span class="dv">1757908892399</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="validation-rules">Validation Rules</h3>
+<ul>
+<li><strong>Market format:</strong> <code>BTC-5m</code>,
+<code>ETH-3m</code>, etc.</li>
+<li><strong>Outcome:</strong> <code>up</code> or <code>down</code>.</li>
+<li><strong>Return rate:</strong> must be greater than <code>0</code>
+and less than or equal to <code>1</code> in the tentative model.</li>
+<li><strong>Freshness:</strong> <code>sent_at</code> must be within the
+configured clock-skew and quote-age limits.</li>
+<li><strong>Idempotency:</strong>
+<code>vendor_id + vendor_quote_id</code> should uniquely identify a
+quote batch.</li>
+<li><strong>Permission:</strong> vendor must be enabled for the
+submitted market and duration.</li>
+</ul>
+<h2 id="open-items-before-production">4. Open Items Before
+Production</h2>
+<ul>
+<li><strong>Authentication:</strong> HMAC headers for phase one;
+PrivateLink, allowlist, mTLS, or client credentials can be
+evaluated.</li>
+<li><strong>Routing reaction speed:</strong> UAT can start with
+immediate best-quote routing; production may use sticky windows or
+thresholds to reduce route oscillation.</li>
+<li><strong>Capacity model:</strong> phase one checks pool health and
+basic capacity; later versions may add per-market and per-side exposure
+limits.</li>
+<li><strong>Fallback behavior:</strong> if no vendor quote is valid,
+default is to reject unless TurboFlow config enables fallback.</li>
+</ul>
+<h2 id="summary">5. Summary</h2>
+<p>Liquidity providers supply the capital pool. Odds vendors supply the
+live return rates. TurboFlow aggregates valid odds quotes, selects the
+best route according to the configured strategy, and sends each order to
+the vendor-specific pool that backs the winning quote.</p>
+<p>This proposal is intentionally concise and tentative. Final endpoint,
+authentication, routing thresholds, and production limits will be
+confirmed during technical onboarding.</p>
+</body>
+</html>

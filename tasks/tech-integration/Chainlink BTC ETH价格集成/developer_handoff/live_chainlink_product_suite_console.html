@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chainlink Product Suite Console</title>
+    <style>
+      :root {
+        --bg: #f5efe5;
+        --panel: rgba(255, 252, 246, 0.9);
+        --border: rgba(29, 42, 68, 0.12);
+        --ink: #16233b;
+        --muted: #57657e;
+        --accent: #0b6e4f;
+        --warn: #a55d1d;
+        --shadow: 0 24px 60px rgba(19, 28, 45, 0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background:
+          radial-gradient(circle at top left, rgba(255,255,255,0.75), transparent 32%),
+          linear-gradient(160deg, #ede4d5 0%, #f7f2ea 40%, #efe6d7 100%);
+        color: var(--ink);
+      }
+      .shell {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .hero {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: 1.2fr 0.8fr;
+        margin-bottom: 22px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      h1, h2, h3, p { margin: 0; }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .hero h1 {
+        font-size: clamp(32px, 4vw, 54px);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .hero p {
+        color: var(--muted);
+        line-height: 1.5;
+        max-width: 70ch;
+      }
+      .controls {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      select, button {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+        font-weight: 700;
+        background: linear-gradient(135deg, #1f7a5a, #125d43);
+        color: #fff;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+      .metric {
+        background: rgba(255,255,255,0.75);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px;
+      }
+      .metric .k {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .metric .v {
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .metric .s {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        text-align: left;
+        padding: 11px 10px;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+      }
+      th {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(11,110,79,0.1);
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .warn {
+        color: var(--warn);
+      }
+      .note {
+        margin-top: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 14px;
+      }
+      @media (max-width: 1100px) {
+        .hero, .two-col, .controls, .grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 720px) {
+        .hero, .two-col, .controls, .grid { grid-template-columns: 1fr; }
+        .shell { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div class="panel">
+          <div class="eyebrow">Chainlink Settlement Suite</div>
+          <h1>Chainlink Product Suite Console</h1>
+          <p>
+            Final production monitor for Chainlink-settled `30s`, `1m`, `3m`, `5m`, `15m`, and `1h` products.
+            It shows the live fair-mid estimate, any active overlay, and the current two-way quote at the selected edge.
+          </p>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Controls</div>
+          <div class="controls">
+            <div>
+              <label for="pair-select">Pair</label>
+              <select id="pair-select"></select>
+            </div>
+            <div>
+              <label for="product-select">Product</label>
+              <select id="product-select"></select>
+            </div>
+            <div>
+              <label for="edge-input">Edge %</label>
+              <select id="edge-input">
+                <option value="10">10.0</option>
+                <option value="9">9.0</option>
+                <option value="8">8.0</option>
+                <option value="7">7.0</option>
+                <option value="6">6.0</option>
+                <option value="5.5">5.5</option>
+                <option value="4">4.0</option>
+                <option value="3.5">3.5</option>
+                <option value="3">3.0</option>
+                <option value="5">5.0</option>
+              </select>
+            </div>
+            <div>
+              <label for="refresh-btn">Config</label>
+              <button id="refresh-btn">Reload Models</button>
+            </div>
+          </div>
+          <div class="note" id="controls-note">
+            Waiting for model config.
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="metric">
+          <div class="k">Signal</div>
+          <div class="v" id="signal-side">-</div>
+          <div class="s" id="signal-note">Waiting for live prices.</div>
+        </div>
+        <div class="metric">
+          <div class="k">Our Quote</div>
+          <div class="v" id="our-quote">-</div>
+          <div class="s" id="our-quote-note">Higher / Lower payouts</div>
+        </div>
+        <div class="metric">
+          <div class="k">Platform Quote</div>
+          <div class="v" id="platform-quote">-</div>
+          <div class="s" id="platform-quote-note">Current public stream</div>
+        </div>
+        <div class="metric">
+          <div class="k">Model Prob</div>
+          <div class="v" id="model-prob">-</div>
+          <div class="s" id="model-prob-note">Raw and adjusted</div>
+        </div>
+      </section>
+
+      <section class="two-col">
+        <div class="panel">
+          <div class="eyebrow">Live State</div>
+          <table>
+            <tbody>
+              <tr><th>Chainlink Mid</th><td id="chainlink-mid">-</td></tr>
+              <tr><th>Binance Spot</th><td id="spot-mid">-</td></tr>
+              <tr><th>Binance Perp</th><td id="perp-mid">-</td></tr>
+              <tr><th>Gap vs Spot</th><td id="gap-spot">-</td></tr>
+              <tr><th>Gap vs Perp</th><td id="gap-perp">-</td></tr>
+              <tr><th>Spot-Perp Spread</th><td id="spot-perp-spread">-</td></tr>
+              <tr><th>Structural Spot Gap</th><td id="struct-spot">-</td></tr>
+              <tr><th>Structural Perp Gap</th><td id="struct-perp">-</td></tr>
+              <tr><th>Last Update</th><td id="last-update">-</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <div class="eyebrow">Model</div>
+          <div class="status" id="model-status">Loading config</div>
+          <div class="note" id="model-summary"></div>
+          <div class="note" id="feed-summary"></div>
+        </div>
+      </section>
+
+      <section class="panel" style="margin-top:18px;">
+        <div class="eyebrow">Feature Vector</div>
+        <table>
+          <thead>
+            <tr><th>Feature</th><th>Value</th><th>Comment</th></tr>
+          </thead>
+          <tbody id="feature-body"></tbody>
+        </table>
+      </section>
+    </div>
+    <script src="./live_chainlink_product_suite_console.js"></script>
+  </body>
+</html>

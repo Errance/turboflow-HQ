@@ -1,0 +1,103 @@
+@page {
+  size: A4;
+  margin: 24mm 20mm 20mm 20mm;
+  background: #ffffff;
+  @bottom-right {
+    content: "TurboFlow confidential draft | " counter(page);
+    color: #64748b;
+    font-size: 8.5pt;
+  }
+}
+
+html {
+  background: #ffffff;
+}
+
+body {
+  background: #ffffff;
+  color: #172033;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.45;
+}
+
+h1 {
+  color: #0f3b6f;
+  font-size: 23pt;
+  line-height: 1.12;
+  margin: 0 0 10pt;
+}
+
+h2 {
+  border-bottom: 1px solid #d7e0ea;
+  color: #0f3b6f;
+  font-size: 15pt;
+  margin: 22pt 0 9pt;
+  padding-bottom: 4pt;
+}
+
+h3 {
+  color: #1f5c8f;
+  font-size: 12.5pt;
+  margin: 16pt 0 6pt;
+}
+
+p {
+  margin: 0 0 8pt;
+}
+
+strong {
+  color: #0f2742;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 10pt 0 14pt;
+  width: 100%;
+}
+
+th {
+  background: #eaf2f8;
+  color: #0f3b6f;
+  font-weight: 700;
+}
+
+th, td {
+  border: 1px solid #cbd7e3;
+  padding: 7pt 8pt;
+  vertical-align: top;
+}
+
+pre {
+  background: #f4f7fa;
+  border: 1px solid #d5e0ea;
+  border-radius: 6px;
+  color: #12233b;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 8.8pt;
+  line-height: 1.35;
+  margin: 9pt 0 13pt;
+  padding: 9pt 10pt;
+  white-space: pre-wrap;
+}
+
+code {
+  color: #0f3b6f;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 90%;
+}
+
+ul, ol {
+  margin-top: 0;
+}
+
+li {
+  margin-bottom: 3pt;
+}
+
+blockquote {
+  border-left: 4px solid #2d78b7;
+  color: #314257;
+  margin: 10pt 0;
+  padding: 6pt 10pt;
+}

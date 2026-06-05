@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>聚合多家赔率预言机服务商</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="technical-plan-pdf.css" />
+</head>
+<body>
+<h1 id="聚合多家赔率预言机服务商">聚合多家赔率预言机服务商</h1>
+<blockquote>
+<p>面向对象：TurboFlow 内部工程团队 目标：将当前单一 SIG/SCB
+流动性报价模型升级为多 Vendor 报价推送、多 Vendor 专属流动性池路由模型。
+当前结论：新 Vendor 以接入 TurboFlow inbound WebSocket quote API
+为主；现有 SIG/SCB outbound WebSocket adapter
+仅保留作平滑迁移，不作为未来 Vendor 扩展模式。</p>
+</blockquote>
+<h2 id="背景与目标">1. 背景与目标</h2>
+<p>当前猜涨跌产品中，SIG/SCB 是唯一外部流动性报价 Vendor。TurboFlow 通过
+outbound WebSocket 连接 SIG/SCB feed，订阅
+<code>BTC-30s</code>、<code>BTC-1m</code>、<code>BTC-3m</code>、<code>BTC-5m</code>、<code>BTC-15m</code>、<code>BTC-1h</code>、<code>ETH-30s</code>、<code>ETH-1m</code>、<code>ETH-3m</code>、<code>ETH-5m</code>、<code>ETH-15m</code>、<code>ETH-1h</code>
+等 up/down market odds。</p>
+<p>SIG/SCB 当前 WebSocket 协议：</p>
+<ul>
+<li>endpoint: <code>/ws/public</code></li>
+<li>handshake headers:
+<ul>
+<li><code>X-API-KEY</code></li>
+<li><code>X-API-TS</code></li>
+<li><code>X-API-SIGN</code></li>
+</ul></li>
+<li>signature:</li>
+</ul>
+<pre class="text"><code>signature = HMAC_SHA256(secret, apiKey + timestamp)</code></pre>
+<p>订阅示例：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;t_market&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;BTC-5m&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-3m&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;market&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>报价示例：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;event_type&quot;</span><span class="fu">:</span> <span class="st">&quot;market-up-down&quot;</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;t_market&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;ts&quot;</span><span class="fu">:</span> <span class="st">&quot;1757908892351&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;t_outcomes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;t_outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m-up&quot;</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="fl">0.8</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;t_outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m-down&quot;</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="fl">0.8</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>本次升级目标：</p>
+<ol type="1">
+<li>TurboFlow 提供 inbound WebSocket quote API，让多 Vendor
+主动推送猜涨跌 odds。</li>
+<li>新 Vendor 不再需要 TurboFlow 为每家 Vendor 写 outbound
+adapter。</li>
+<li>内部将 Vendor 报价标准化，建立多 Vendor quote book。</li>
+<li>下单时根据可配置 routing strategy 选择最优报价，并立即路由到对应
+Vendor 的专属 liquidity pool/account。</li>
+<li>保留 legacy SIG/SCB adapter 并接入同一标准化 quote ingestion
+path，迁移完成后可下线。</li>
+<li>Auth method 与 quote win reaction speed
+作为开放讨论项，不在本方案中锁死。</li>
+</ol>
+<h2 id="当前代码链路调查">2. 当前代码链路调查</h2>
+<p>相关 repo：</p>
+<ul>
+<li><code>surfv2-dex-svm-keeper</code></li>
+<li><code>cex-api-service</code></li>
+<li><code>base</code></li>
+</ul>
+<p>当前 SIG/SCB 报价链路：</p>
+<pre class="text"><code>PredictMarketService
+  -&gt; SubscribeWs outbound connection
+  -&gt; handleSigWsMsg
+  -&gt; PredictRRateRedisVo
+  -&gt; Redis hash pm:duration:return:rate
+  -&gt; procPredictConfigs / globalRiskCfg
+  -&gt; cex-api-service predict config websocket
+  -&gt; CreateOrderForPredictMarket
+  -&gt; PredictOtherPoolID = 102 when keeperPredictEnableSubscribe = true</code></pre>
+<p>关键文件：</p>
+<ul>
+<li><code>surfv2-dex-svm-keeper/domain/services/predict_market_service.go</code>
+<ul>
+<li><code>NewPredictMarketService</code> 初始化 SIG/SCB outbound
+WebSocket subscriber。</li>
+<li><code>handleSigWsMsg</code> 解析 SIG/SCB odds，将 up/down
+<code>return_rate</code> 写入缓存。</li>
+<li><code>procPredictConfigs</code> 发布猜涨跌市场配置。</li>
+</ul></li>
+<li><code>surfv2-dex-svm-keeper/common/websocket.go</code>
+<ul>
+<li><code>SubscribeWs</code></li>
+<li><code>WsSigMarketMsg</code></li>
+<li><code>PredictRRateRedisVo</code></li>
+</ul></li>
+<li><code>surfv2-dex-svm-keeper/domain/repo/repo_redis.go</code>
+<ul>
+<li><code>SavePredictDurationReturnRate</code></li>
+<li><code>GetPredictDurationReturnRate</code></li>
+</ul></li>
+<li><code>surfv2-dex-svm-keeper/domain/services/api_order_service.go</code>
+<ul>
+<li><code>CreateOrderForPredictMarket</code></li>
+<li>当前启用外部报价时订单池子设置为
+<code>common.PredictOtherPoolID</code></li>
+</ul></li>
+<li><code>surfv2-dex-svm-keeper/common/constant.go</code>
+<ul>
+<li><code>PredictMarketPoolID = 101</code></li>
+<li><code>PredictOtherPoolID = 102</code></li>
+</ul></li>
+<li><code>base/rpc/predict_market.go</code>
+<ul>
+<li><code>PredictPublishMsg</code></li>
+<li><code>PredictOrderRisk</code></li>
+<li><code>CreatePredictMarketOrderReq</code></li>
+</ul></li>
+</ul>
+<p>当前限制：</p>
+<ul>
+<li>Vendor identity 没有进入报价缓存与下单决策。</li>
+<li>外部流动性池只有固定 <code>PredictOtherPoolID = 102</code>
+语义。</li>
+<li>报价选择是单 Vendor overwrite，不支持多个 Vendor
+同时报价、比较和审计。</li>
+<li>订单只持久化 <code>ReturnRate</code> 和 <code>PoolID</code>，缺少
+<code>vendor_id</code>、<code>quote_id</code>、routing strategy
+version、decision reason 等审计字段。</li>
+<li>新 Vendor 如果沿用当前模式，需要为每家 Vendor 写 outbound
+adapter，不利于扩展。</li>
+</ul>
+<h2 id="推荐方案">3. 推荐方案</h2>
+<p>采用方案：Quote Gateway + normalized quote book + pluggable
+router。</p>
+<p>目标架构：</p>
+<pre class="text"><code>Vendor
+  -&gt; TurboFlow inbound WebSocket quote API
+  -&gt; auth/session validation
+  -&gt; quote normalization
+  -&gt; latest quote book by vendor + market + duration + side
+  -&gt; best-quote routing strategy
+  -&gt; selected vendor liquidity pool/account
+  -&gt; existing predict order open/settle flow</code></pre>
+<p>Legacy SIG/SCB 迁移链路：</p>
+<pre class="text"><code>SIG/SCB outbound WS adapter
+  -&gt; same normalized quote ingestion interface
+  -&gt; quote book
+  -&gt; router</code></pre>
+<p>原则：</p>
+<ul>
+<li>新 Vendor 统一接入 TurboFlow inbound WebSocket quote API。</li>
+<li>不为新 Vendor 增加 outbound subscription adapter。</li>
+<li>SIG/SCB 当前 outbound adapter 保留为 <code>sig_legacy</code>
+source，用于平滑迁移。</li>
+<li>下单时选择 winning quote 后，立即使用该 Vendor 对应的专属 liquidity
+pool/account。</li>
+<li>Routing strategy 必须是可扩展的，默认实现为 best return rate。</li>
+</ul>
+<h2 id="组件设计">4. 组件设计</h2>
+<h3 id="vendor-registry">4.1 Vendor Registry</h3>
+<p>维护 Vendor、市场权限、池子映射和风控配置。</p>
+<p>建议字段：</p>
+<pre class="text"><code>vendor_id
+vendor_name
+status
+allowed_pairs
+allowed_durations
+pool_id
+max_quote_age_ms
+clock_skew_ms
+priority
+fallback_enabled
+auth_config_ref
+created_at
+updated_at</code></pre>
+<p>Phase 1 可使用 <code>sys_config</code> JSON
+快速落地；如果团队需要更好的审计、后台管理和热更新，建议建 DB
+table。</p>
+<p>每个可参与 routing 的 Vendor 必须先完成专属 liquidity pool/account
+配置。Router 不应允许没有 <code>pool_id</code>、pool disabled、pool
+不健康或 pool capacity 不足的 Vendor 赢得报价。</p>
+<p>示例配置：</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendors&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;vendor_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb&quot;</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;vendor_name&quot;</span><span class="fu">:</span> <span class="st">&quot;SCB&quot;</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;status&quot;</span><span class="fu">:</span> <span class="st">&quot;enabled&quot;</span><span class="fu">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;pool_id&quot;</span><span class="fu">:</span> <span class="dv">102</span><span class="fu">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;allowed_markets&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;BTC-30s&quot;</span><span class="ot">,</span> <span class="st">&quot;BTC-1m&quot;</span><span class="ot">,</span> <span class="st">&quot;BTC-3m&quot;</span><span class="ot">,</span> <span class="st">&quot;BTC-5m&quot;</span><span class="ot">,</span> <span class="st">&quot;BTC-15m&quot;</span><span class="ot">,</span> <span class="st">&quot;BTC-1h&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-30s&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-1m&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-3m&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-5m&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-15m&quot;</span><span class="ot">,</span> <span class="st">&quot;ETH-1h&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;max_quote_age_ms&quot;</span><span class="fu">:</span> <span class="dv">2000</span><span class="fu">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;clock_skew_ms&quot;</span><span class="fu">:</span> <span class="dv">5000</span><span class="fu">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;priority&quot;</span><span class="fu">:</span> <span class="dv">10</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="inbound-quote-websocket-gateway">4.2 Inbound Quote WebSocket
+Gateway</h3>
+<p>新增 Vendor-facing WebSocket endpoint：</p>
+<pre class="text"><code>/ws/vendor/predict-quotes</code></pre>
+<p>建议 Phase 1 放在 <code>surfv2-dex-svm-keeper</code>，原因：</p>
+<ul>
+<li>keeper 已经持有猜涨跌 order/risk/pool routing 逻辑。</li>
+<li>可以直接复用当前 <code>PredictMarketService</code>、Redis、routing
+与 order creation 链路。</li>
+<li>改造范围比新增独立服务更小。</li>
+</ul>
+<p>后续如果 Vendor 数量、连接规模、权限管理复杂度提高，可以将该 gateway
+抽成独立服务。</p>
+<h3 id="quote-normalizer">4.3 Quote Normalizer</h3>
+<p>将所有来源的 Vendor quote 转成内部统一结构：</p>
+<pre class="text"><code>vendor_id
+quote_source
+vendor_quote_id
+market
+pair_id
+duration
+side
+return_rate
+quote_ts
+received_at
+pool_id
+raw_payload_hash</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>quote_source</code>: <code>inbound_ws</code> /
+<code>sig_legacy</code></li>
+<li><code>side</code>: <code>up</code> /
+<code>down</code>，内部映射到当前 <code>OpenLong</code> /
+<code>OpenShort</code> 使用的 bid/ask return rate。</li>
+<li><code>return_rate</code>:
+当前先沿用现有范围校验，<code>0 &lt; return_rate &lt;= 1</code>。</li>
+</ul>
+<h3 id="quote-book">4.4 Quote Book</h3>
+<p>保存每个 Vendor 对每个 <code>pair + duration + side</code>
+的最新有效报价。</p>
+<p>建议 Redis key：</p>
+<pre class="text"><code>pm:vendor_quotes:{pair_id}:{duration}:{side}</code></pre>
+<p>Hash field:</p>
+<pre class="text"><code>{vendor_id}</code></pre>
+<p>Hash value:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb&quot;</span><span class="fu">,</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;market&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m&quot;</span><span class="fu">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pair_id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;duration&quot;</span><span class="fu">:</span> <span class="dv">300</span><span class="fu">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;side&quot;</span><span class="fu">:</span> <span class="st">&quot;up&quot;</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="st">&quot;0.80&quot;</span><span class="fu">,</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;quote_ts&quot;</span><span class="fu">:</span> <span class="dv">1757908892351</span><span class="fu">,</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;received_at&quot;</span><span class="fu">:</span> <span class="dv">1757908892399</span><span class="fu">,</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pool_id&quot;</span><span class="fu">:</span> <span class="dv">102</span><span class="fu">,</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;inbound_ws&quot;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>TTL 建议：</p>
+<ul>
+<li>Redis key TTL 应大于 <code>max_quote_age_ms</code>，例如 10-30
+秒。</li>
+<li>Router 仍必须基于 quote age 判断有效性，不能只依赖 Redis TTL。</li>
+</ul>
+<h3 id="routing-strategy">4.5 Routing Strategy</h3>
+<p>新增 routing layer：</p>
+<pre class="text"><code>SelectQuote(pair_id, duration, order_way, amount, now) -&gt; RouteDecision</code></pre>
+<p>返回：</p>
+<pre class="text"><code>vendor_id
+pool_id
+return_rate
+quote_id
+quote_ts
+quote_received_at
+routing_strategy
+decision_reason</code></pre>
+<p>默认策略：</p>
+<ol type="1">
+<li>按 <code>pair_id + duration + side</code> 找候选 quotes。</li>
+<li>过滤：
+<ul>
+<li>Vendor enabled</li>
+<li>market/duration enabled</li>
+<li>quote fresh</li>
+<li>pool enabled/healthy</li>
+<li>pool/vendor capacity 足够</li>
+</ul></li>
+<li>选择最高 <code>return_rate</code>。</li>
+<li>tie-breaker：
+<ul>
+<li>Vendor priority 更高者优先。</li>
+<li><code>received_at</code> 更新者优先。</li>
+</ul></li>
+</ol>
+<p>可扩展策略：</p>
+<ul>
+<li>best quote</li>
+<li>sticky winner</li>
+<li>weighted vendor</li>
+<li>capacity-aware</li>
+<li>risk-adjusted quote</li>
+<li>manual priority/fallback</li>
+</ul>
+<h3 id="public-predict-config-publishing">4.6 Public Predict Config
+Publishing</h3>
+<p>当前前端/API 侧通过 <code>PredictPublishMsg</code>
+消费猜涨跌配置，其中每个 duration 暴露单一 <code>AskReturnRate</code> /
+<code>BidReturnRate</code>。多 Vendor
+后，公开配置仍建议保持这个形状：对每个
+<code>pair + duration + side</code> 发布当前 router 选出的 winning
+quote，而不是把所有 Vendor quote 暴露给客户端。</p>
+<p>原因：</p>
+<ul>
+<li>客户端只需要展示当前可成交赔率。</li>
+<li>最终下单仍由服务端重新执行 routing 并锁定
+quote，不能信任客户端提交的 <code>return_rate</code>。</li>
+<li>后续如果业务需要展示 Vendor depth 或 best/second-best
+spread，可以新增内部管理接口或扩展 public payload。</li>
+</ul>
+<p>发布逻辑：</p>
+<pre class="text"><code>quote book update
+  -&gt; recompute current winner for affected market/side
+  -&gt; update globalRiskCfg / PredictPublishMsg
+  -&gt; publish existing predict_risk_configs event</code></pre>
+<p>如果 Phase 1 为了降低改造量，也可以继续由
+<code>procPredictConfigs</code> 定时发布，但下单路径必须实时调用
+router，避免只依赖公开配置缓存。</p>
+<h2 id="vendor-websocket-api">5. Vendor WebSocket API</h2>
+<p>Endpoint：</p>
+<pre class="text"><code>/ws/vendor/predict-quotes</code></pre>
+<h3 id="connection">5.1 Connection</h3>
+<p>Vendor 建立 WebSocket 连接后：</p>
+<ol type="1">
+<li>TurboFlow 校验 handshake auth。</li>
+<li>Vendor 可发送 <code>hello</code> / <code>register</code> frame
+声明支持 markets；如果 registry 已配置完整权限，该步骤可选。</li>
+<li>Vendor 持续发送 <code>quote_batch</code>。</li>
+<li>TurboFlow 对 accepted/rejected quote 返回 ack。</li>
+<li>Vendor 定期 ping/pong 或发送 heartbeat。</li>
+</ol>
+<h3 id="quote-push-payload">5.2 Quote push payload</h3>
+<p>建议 payload：</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;quote_batch&quot;</span><span class="fu">,</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sent_at&quot;</span><span class="fu">:</span> <span class="dv">1757908892351</span><span class="fu">,</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;quotes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;market&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m&quot;</span><span class="fu">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;outcomes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;up&quot;</span><span class="fu">,</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="st">&quot;0.80&quot;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;down&quot;</span><span class="fu">,</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;return_rate&quot;</span><span class="fu">:</span> <span class="st">&quot;0.79&quot;</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Ack：</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ack&quot;</span><span class="fu">,</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accepted&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;rejected&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;server_ts&quot;</span><span class="fu">:</span> <span class="dv">1757908892399</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Partial reject：</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;ack&quot;</span><span class="fu">,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;vendor_quote_id&quot;</span><span class="fu">:</span> <span class="st">&quot;scb-1757908892351-001&quot;</span><span class="fu">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accepted&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;rejected&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;server_ts&quot;</span><span class="fu">:</span> <span class="dv">1757908892399</span><span class="fu">,</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;market&quot;</span><span class="fu">:</span> <span class="st">&quot;BTC-5m&quot;</span><span class="fu">,</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;outcome&quot;</span><span class="fu">:</span> <span class="st">&quot;down&quot;</span><span class="fu">,</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;QUOTE_OUT_OF_RANGE&quot;</span><span class="fu">,</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;return_rate must be &gt; 0 and &lt;= 1&quot;</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="validation">5.3 Validation</h3>
+<p>每条 quote 需要校验：</p>
+<ul>
+<li><code>vendor_quote_id</code> 非空且在
+<code>vendor_id + vendor_quote_id</code> 下幂等。</li>
+<li><code>sent_at</code> 在允许 clock skew 内。</li>
+<li><code>market</code> 可解析为 supported
+<code>pair_id + duration</code>。</li>
+<li>Vendor 对该 market/duration 有权限。</li>
+<li><code>return_rate &gt; 0 &amp;&amp; return_rate &lt;= 1</code>。</li>
+<li>quote 中至少包含一个 outcome；推荐每次同时包含 up/down。</li>
+</ul>
+<p>连接级违规：</p>
+<ul>
+<li>Auth 失败。</li>
+<li>Vendor disabled。</li>
+<li>消息过大或无法解析。</li>
+<li>重复异常或 reject ratio 过高。</li>
+</ul>
+<h2 id="下单集成">6. 下单集成</h2>
+<p>当前 <code>CreateOrderForPredictMarket</code> 根据
+<code>pairOrderConfig.BidReturnRate / AskReturnRate</code>
+设置订单赔率，并在 <code>keeperPredictEnableSubscribe = true</code>
+时将订单池子切到 <code>PredictOtherPoolID = 102</code>。</p>
+<p>改造后：</p>
+<ol type="1">
+<li>订单校验阶段仍使用全局 predict market config 验证
+pair/duration/min/max。</li>
+<li>创建订单前调用 routing layer：</li>
+</ol>
+<pre class="text"><code>route = SelectQuote(pair_id, duration, order_way, usdt_value, submit_at)</code></pre>
+<ol start="3" type="1">
+<li>使用 <code>route.return_rate</code> 设置
+<code>order.ReturnRate</code>。</li>
+<li>使用 <code>route.pool_id</code> 设置
+<code>order.PoolID</code>。</li>
+<li>持久化 route metadata。</li>
+<li>后续 open/settle 链上流程继续使用订单上的 <code>PoolID</code> 与
+<code>ReturnRate</code>，保证 settlement
+使用开仓时锁定的报价与池子。</li>
+</ol>
+<p>建议新增订单字段或订单 route audit 表：</p>
+<pre class="text"><code>liquidity_vendor_id
+liquidity_pool_id
+quote_id
+quote_ts
+quote_received_at
+quote_source
+routing_strategy
+routing_decision_reason</code></pre>
+<p>如果不希望立刻改大 <code>chain_predict_order</code> 表，可以新增
+<code>chain_predict_order_liquidity_route</code> 表：</p>
+<pre class="text"><code>id
+order_id
+vendor_id
+pool_id
+quote_id
+quote_ts
+quote_received_at
+quote_source
+return_rate
+routing_strategy
+decision_reason
+raw_quote_snapshot
+created_at</code></pre>
+<p>建议优先使用 route audit
+表，减少对主订单表的侵入，同时满足审计要求。</p>
+<h2 id="routing-速度开放讨论">7. Routing 速度开放讨论</h2>
+<p>本方案不锁定 quote win reaction
+speed，需要产品、风控、技术共同确认。</p>
+<h3 id="option-a-immediate-switching">Option A: Immediate switching</h3>
+<p>每次下单都读取当前最新 quote book，最高 <code>return_rate</code>
+Vendor 获胜。</p>
+<p>优点：</p>
+<ul>
+<li>用户理论上拿到最优赔率。</li>
+<li>实现简单，UAT 验证直观。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>高频报价下 pool route 可能快速切换。</li>
+<li>Vendor exposure 与池子 PnL 变化更快，需要监控支持。</li>
+</ul>
+<h3 id="option-b-sticky-winner-window">Option B: Sticky winner
+window</h3>
+<p>某个 Vendor 赢得 <code>market + side</code> 后，在 N 秒窗口内保持
+winner，除非 quote stale、Vendor 断连或 quote 明显变差。</p>
+<p>优点：</p>
+<ul>
+<li>降低 route oscillation。</li>
+<li>对池子会计和 Vendor exposure 更稳定。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>部分订单可能没有拿到瞬时最优 quote。</li>
+</ul>
+<h3 id="option-c-threshold-hysteresis">Option C: Threshold /
+hysteresis</h3>
+<p>只有当新 Vendor 比当前 winner 高出配置阈值，才切换 winner。</p>
+<p>优点：</p>
+<ul>
+<li>兼顾价格优化与稳定性。</li>
+<li>适合生产长期运行。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>需要确定阈值单位和监控。</li>
+</ul>
+<p>建议：</p>
+<ul>
+<li>UAT 先使用 immediate switching，加完整 route decision logs。</li>
+<li>生产前根据 Vendor 报价频率、route oscillation
+指标和运营偏好，决定是否启用 sticky/hysteresis。</li>
+</ul>
+<h2 id="auth-method-开放讨论">8. Auth method 开放讨论</h2>
+<p>Inbound vendor WebSocket auth 需要与 infra/security 最终确认。</p>
+<h3 id="option-a-hmac-headers">Option A: HMAC headers</h3>
+<p>沿用当前 SIG/SCB 风格：</p>
+<pre class="text"><code>X-API-KEY
+X-API-TS
+X-API-SIGN = HMAC_SHA256(secret, apiKey + timestamp)</code></pre>
+<p>优点：</p>
+<ul>
+<li>当前代码已有 <code>GenSignature</code> 类似 helper。</li>
+<li>Vendor 容易理解，和现有 SIG/SCB 文档一致。</li>
+<li>Phase 1 落地最快。</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>需要服务端校验 clock skew。</li>
+<li>secret 存 KMS/Secrets Manager。</li>
+<li>建议支持 key rotation。</li>
+</ul>
+<h3 id="option-b-privatelink-allowlist-api-key">Option B: PrivateLink /
+allowlist + API key</h3>
+<p>通过网络边界降低暴露面，再用 API key 识别 Vendor。</p>
+<p>优点：</p>
+<ul>
+<li>对私有网络集成友好。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>单独 API key 不足以防 replay；仍建议配合签名。</li>
+</ul>
+<h3 id="option-c-mtls">Option C: mTLS</h3>
+<p>Vendor 使用 client certificate 建连。</p>
+<p>优点：</p>
+<ul>
+<li>安全边界强。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>证书生命周期和 Vendor 对接成本更高。</li>
+</ul>
+<h3 id="option-d-jwt-client-credentials">Option D: JWT / client
+credentials</h3>
+<p>Vendor 先换 token，再用 token 建 WS。</p>
+<p>优点：</p>
+<ul>
+<li>权限模型清晰，可扩展。</li>
+</ul>
+<p>风险：</p>
+<ul>
+<li>Phase 1 增加额外服务与 token 生命周期复杂度。</li>
+</ul>
+<p>建议：</p>
+<ul>
+<li>Phase 1 使用 HMAC headers + optional network allowlist。</li>
+<li>后续如 Vendor 数量和安全要求提高，再升级到 mTLS 或 client
+credentials。</li>
+</ul>
+<h2 id="legacy-sigscb-迁移策略">9. Legacy SIG/SCB 迁移策略</h2>
+<p>迁移期间：</p>
+<ul>
+<li>当前 outbound SIG/SCB subscriber 继续运行。</li>
+<li>将 <code>handleSigWsMsg</code> 改造为调用统一 quote
+normalizer。</li>
+<li>SIG/SCB source 使用固定 <code>vendor_id = sig_legacy</code> 或
+<code>scb_legacy</code>。</li>
+<li>SIG/SCB 对应 pool 通过 Vendor Registry 配置。</li>
+<li>Router 不关心 quote 来源，只按标准 quote book 选择。</li>
+</ul>
+<p>迁移完成条件：</p>
+<ul>
+<li>新 inbound WS Vendor 在 UAT 和 Production 稳定推送。</li>
+<li>当前 SIG/SCB Vendor 已改为 inbound push，或业务确认不再依赖 legacy
+feed。</li>
+<li>监控显示 quote freshness、order route、pool settlement 无异常。</li>
+<li>删除或关闭 legacy adapter config。</li>
+</ul>
+<h2 id="observability-与告警">10. Observability 与告警</h2>
+<p>Vendor 维度：</p>
+<ul>
+<li>active sessions</li>
+<li>last quote received time</li>
+<li>accepted quote count</li>
+<li>rejected quote count</li>
+<li>reject reasons</li>
+<li>heartbeat timeout</li>
+<li>reconnect count</li>
+</ul>
+<p>Market 维度：</p>
+<ul>
+<li>current winning vendor</li>
+<li>winning return rate</li>
+<li>second-best return rate</li>
+<li>quote age</li>
+<li>route switch count</li>
+<li>no valid quote count</li>
+</ul>
+<p>Order 维度：</p>
+<ul>
+<li>selected vendor</li>
+<li>selected pool</li>
+<li>selected quote id</li>
+<li>selected return rate</li>
+<li>routing strategy</li>
+<li>decision reason</li>
+</ul>
+<p>告警：</p>
+<ul>
+<li>Vendor disconnected</li>
+<li>Vendor quote stale</li>
+<li>no valid quote for active market</li>
+<li>quote reject spike</li>
+<li>route oscillation spike</li>
+<li>selected pool unhealthy</li>
+<li>order create failed after route selected</li>
+</ul>
+<h2 id="rollout-plan">11. Rollout Plan</h2>
+<h3 id="phase-0-design-confirmation">Phase 0: Design confirmation</h3>
+<ul>
+<li>确认 inbound WS payload。</li>
+<li>确认 Vendor Registry 存储方式。</li>
+<li>确认 Phase 1 auth method。</li>
+<li>确认 UAT 使用 immediate routing。</li>
+</ul>
+<h3 id="phase-1-core-implementation">Phase 1: Core implementation</h3>
+<ul>
+<li>新增 inbound vendor quote WS endpoint。</li>
+<li>新增 Vendor Registry config/table。</li>
+<li>新增 quote normalizer。</li>
+<li>新增 quote book Redis schema。</li>
+<li>新增 routing strategy interface 与 default best-quote
+implementation。</li>
+<li>改造 <code>CreateOrderForPredictMarket</code> 使用 router 选择
+<code>ReturnRate</code> 和 <code>PoolID</code>。</li>
+<li>新增 order route audit。</li>
+<li>改造 legacy SIG/SCB handler 写入统一 quote book。</li>
+</ul>
+<h3 id="phase-2-uat">Phase 2: UAT</h3>
+<ul>
+<li>接入至少两个 Vendor source：
+<ul>
+<li>一个 inbound push Vendor。</li>
+<li>legacy SIG/SCB source。</li>
+</ul></li>
+<li>验证 best quote selection。</li>
+<li>验证 vendor-specific pool routing。</li>
+<li>验证 stale quote reject。</li>
+<li>验证 Vendor disconnect fallback。</li>
+<li>验证 order open/settle 使用锁定 route。</li>
+</ul>
+<h3 id="phase-3-production-rollout">Phase 3: Production rollout</h3>
+<ul>
+<li>Shadow 模式：接收 inbound quotes，只记录 hypothetical
+winner，不影响真实下单。</li>
+<li>Small traffic / allowlist：部分账户或市场启用 multi-vendor
+routing。</li>
+<li>Full traffic：所有配置市场启用。</li>
+<li>观察 route oscillation 后决定是否启用 sticky/hysteresis。</li>
+</ul>
+<h3 id="phase-4-legacy-cleanup">Phase 4: Legacy cleanup</h3>
+<ul>
+<li>关闭 legacy SIG/SCB outbound adapter。</li>
+<li>移除 <code>PredictOtherPoolID</code> 的单一外部池硬编码语义。</li>
+<li>保留 Vendor Registry + router 作为长期入口。</li>
+</ul>
+<h2 id="测试建议">12. 测试建议</h2>
+<p>Unit tests：</p>
+<ul>
+<li>market parser: <code>BTC-5m</code> -&gt; pair/duration。</li>
+<li>quote validation。</li>
+<li>quote normalizer。</li>
+<li>quote book read/write。</li>
+<li>routing tie-breaker。</li>
+<li>stale quote filtering。</li>
+<li>vendor permission filtering。</li>
+</ul>
+<p>Integration tests：</p>
+<ul>
+<li>Vendor WS connect/auth/push/ack。</li>
+<li>multi Vendor quote competition。</li>
+<li>CreateOrderForPredictMarket selects correct <code>ReturnRate</code>
+and <code>PoolID</code>。</li>
+<li>route audit is persisted。</li>
+<li>legacy SIG quote enters same quote book。</li>
+</ul>
+<p>UAT checklist：</p>
+<ul>
+<li>BTC/ETH all durations can receive quotes。</li>
+<li>Up/down directions map correctly to current long/short
+semantics。</li>
+<li>No valid quote rejects order or falls back only if explicitly
+configured。</li>
+<li>Order settlement uses order-time locked quote and pool。</li>
+<li>Dashboards show quote freshness and current winner。</li>
+</ul>
+<h2 id="open-questions">13. Open Questions</h2>
+<ol type="1">
+<li>Inbound WebSocket auth method:
+<ul>
+<li>Recommended Phase 1: HMAC headers + optional network allowlist.</li>
+<li>Need infra/security confirmation.</li>
+</ul></li>
+<li>Quote win reaction speed:
+<ul>
+<li>UAT recommendation: immediate switching.</li>
+<li>Production decision: immediate vs sticky window vs
+threshold/hysteresis.</li>
+</ul></li>
+<li>Vendor Registry storage:
+<ul>
+<li><code>sys_config</code> JSON for speed, or DB table for
+audit/admin.</li>
+</ul></li>
+<li>Fallback behavior:
+<ul>
+<li>If no Vendor quote is valid, reject order by default.</li>
+<li>Need business confirmation before enabling platform-pool
+fallback.</li>
+</ul></li>
+<li>Capacity model:
+<ul>
+<li>Phase 1 can check pool health/basic balance.</li>
+<li>Need future definition for per Vendor max exposure, per market
+notional cap, and side-specific capacity.</li>
+</ul></li>
+</ol>
+</body>
+</html>
