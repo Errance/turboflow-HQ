@@ -18,6 +18,18 @@
       "lint_cmd": "jq empty ops/repos.json ops/roles.json ops/workers.json ops/infra.json ops/policy.json ops/repo-index.json"
     },
     {
+      "name": "DefiLlama-Adapters",
+      "github": "turboflow-xyz/DefiLlama-Adapters",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/DefiLlama-Adapters",
+      "linear_team_id": "TBD",
+      "linear_team_key": "TBD",
+      "linear_project_id": "TBD",
+      "github_account": "thomson-yee",
+      "stack": "defillama-adapters",
+      "test_cmd": "TBD",
+      "lint_cmd": "TBD"
+    },
+    {
       "name": "base",
       "github": "turboflow-xyz/base",
       "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/base",
@@ -30,33 +42,9 @@
       "lint_cmd": "go test ./..."
     },
     {
-      "name": "framework",
-      "github": "turboflow-xyz/framework",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/framework",
-      "linear_team_id": "TBD",
-      "linear_team_key": "TBD",
-      "linear_project_id": "TBD",
-      "github_account": "thomson-yee",
-      "stack": "go-library",
-      "test_cmd": "go test ./...",
-      "lint_cmd": "go test ./..."
-    },
-    {
       "name": "cex-api-service",
       "github": "turboflow-xyz/cex-api-service",
       "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/cex-api-service",
-      "linear_team_id": "TBD",
-      "linear_team_key": "TBD",
-      "linear_project_id": "TBD",
-      "github_account": "thomson-yee",
-      "stack": "go-service",
-      "test_cmd": "go test ./...",
-      "lint_cmd": "go test ./..."
-    },
-    {
-      "name": "cex-chain-listen-service",
-      "github": "turboflow-xyz/cex-chain-listen-service",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/cex-chain-listen-service",
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
@@ -102,26 +90,26 @@
       "lint_cmd": "go test ./..."
     },
     {
-      "name": "surfv2-dex-svm-keeper",
-      "github": "turboflow-xyz/surfv2-dex-svm-keeper",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/surfv2-dex-svm-keeper",
+      "name": "explorer",
+      "github": "turboflow-xyz/explorer",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/explorer",
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
       "github_account": "thomson-yee",
-      "stack": "go-service",
-      "test_cmd": "go test ./...",
-      "lint_cmd": "go test ./..."
+      "stack": "frontend",
+      "test_cmd": "TBD",
+      "lint_cmd": "TBD"
     },
     {
-      "name": "surfv2-dex-svm-user-service",
-      "github": "turboflow-xyz/surfv2-dex-svm-user-service",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/surfv2-dex-svm-user-service",
+      "name": "framework",
+      "github": "turboflow-xyz/framework",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/framework",
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
       "github_account": "thomson-yee",
-      "stack": "go-service",
+      "stack": "go-library",
       "test_cmd": "go test ./...",
       "lint_cmd": "go test ./..."
     },
@@ -136,6 +124,30 @@
       "stack": "go-service",
       "test_cmd": "go test ./...",
       "lint_cmd": "go test ./..."
+    },
+    {
+      "name": "surfv2-dex-svm-keeper",
+      "github": "turboflow-xyz/surfv2-dex-svm-keeper",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/surfv2-dex-svm-keeper",
+      "linear_team_id": "TBD",
+      "linear_team_key": "TBD",
+      "linear_project_id": "TBD",
+      "github_account": "thomson-yee",
+      "stack": "go-service",
+      "test_cmd": "go test ./...",
+      "lint_cmd": "go test ./..."
+    },
+    {
+      "name": "turbo-manabesh-data-service",
+      "github": "turboflow-xyz/turbo-manabesh-data-service",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/turbo-manabesh-data-service",
+      "linear_team_id": "TBD",
+      "linear_team_key": "TBD",
+      "linear_project_id": "TBD",
+      "github_account": "thomson-yee",
+      "stack": "typescript-service",
+      "test_cmd": "TBD",
+      "lint_cmd": "TBD"
     },
     {
       "name": "turbo-soccer-book-service",
@@ -162,40 +174,16 @@
       "lint_cmd": "go test ./..."
     },
     {
-      "name": "amber-helm-charts",
-      "github": "turboflow-xyz/amber-helm-charts",
-      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/amber-helm-charts",
+      "name": "qa-grocery",
+      "github": "thomson-yee/qa-grocery",
+      "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/qa-grocery",
       "linear_team_id": "TBD",
       "linear_team_key": "TBD",
       "linear_project_id": "TBD",
       "github_account": "thomson-yee",
-      "stack": "helm-charts",
-      "test_cmd": "TBD",
-      "lint_cmd": "TBD"
-    },
-        {
-            "name": "amber-cicd-lib",
-            "github": "turboflow-xyz/amber-cicd-lib",
-            "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/amber-cicd-lib",
-      "linear_team_id": "TBD",
-      "linear_team_key": "TBD",
-      "linear_project_id": "TBD",
-            "github_account": "thomson-yee",
-            "stack": "github-actions-library",
-            "test_cmd": "TBD",
-            "lint_cmd": "TBD"
-        },
-        {
-            "name": "qa-grocery",
-            "github": "thomson-yee/qa-grocery",
-            "local_path": "/Users/wenqingyu/Documents/workspace/turboflow/qa-grocery",
-            "linear_team_id": "TBD",
-            "linear_team_key": "TBD",
-            "linear_project_id": "TBD",
-            "github_account": "thomson-yee",
-            "stack": "qa-assets",
-            "test_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs",
-            "lint_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs"
-        }
-    ]
+      "stack": "qa-assets",
+      "test_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs",
+      "lint_cmd": "python3 -m py_compile products/football-prediction-market/simulators/polymarket-quote-bridge/polymarket_quote_bridge.py && node --check products/event-contracts/live-odds-api/predict-market-live-odds.mjs"
+    }
+  ]
 }

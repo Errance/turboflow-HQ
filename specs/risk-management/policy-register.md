@@ -12,7 +12,7 @@ This register is the central control view for current Turboflow risk-management 
 | ------------------ | ----------------------------------- | ----------------- | ------------- | -------------------------- | --------------- | -------------- | ----------------------------------- | -------------------------------------------------------------- |
 | `RM-PM-POLICY`     | Prediction market                   | v3.0 draft import | Draft         | Partially implemented      | Linked          | Unknown        | `surfv2-dex-svm-keeper` owner / CTO | [products/prediction-market.md](products/prediction-market.md) |
 | `RM-CEX-POLICY`    | CEX pair risk controls              | v0.1 draft index  | Draft         | Implemented with doc drift | Linked          | Unknown        | `cex-order-service` owner / CTO     | [products/cex-risk-controls.md](products/cex-risk-controls.md) |
-| `RM-DATA-POLICY`   | Slippage, spread, volatility inputs | v0.1 indexed      | Draft         | Partially implemented      | Linked          | Unknown        | Oracle/slippage owners              | [index.md](index.md)                                           |
+| `RM-DATA-POLICY`   | Slippage, spread, volatility inputs | v0.1 indexed      | Draft         | Partially implemented      | Linked          | Unknown        | Oracle/slippage owners              | [index.md](Turboflow-HQ/specs/risk-management/index.md)                                           |
 | `RM-CONFIG-POLICY` | Admin/runtime risk config           | v0.1 placeholder  | Draft         | Unknown                    | Missing         | Unknown        | CTO / admin backend owner           | TBD                                                            |
 
 ## Control Register

@@ -51,6 +51,23 @@ See `ops/repos.json` for the complete registry.
 - Do not create separate Claude-only and Codex-only workflow rules.
 - Never force-push or push failing validation without explicit confirmation.
 
+## Product Workstream Documentation
+
+- Product workstream docs live under `tasks/product-worksteams/`.
+- For actively iterated products, group docs by version folder, for example `v2.2 - <version purpose>/`.
+- Each version folder should contain an `Index.md` with:
+  - version status and purpose,
+  - a file index with per-file status,
+  - a `## Progress` section with timestamped checkbox action logs.
+- Standard version folder artifacts are:
+  - `需求文档 - ...` for product requirements/design notes,
+  - `API文档 - ... CN.md` for implementation/API docs from engineering,
+  - `API文档 - ... EN.md` for aligned English translations.
+- If an expected artifact does not exist yet, create a clearly named placeholder marked `TBD` in the filename and file body.
+- Project-level indexes should list all versions, each version status, and progress summary.
+- Do not encode personal responsibility fields such as owner, responsible person, assignee, or named contact in these indexes/placeholders. Use neutral status and support-channel language instead.
+- Superseded or prior-version docs should be wrapped into the corresponding previous version folder, not left loose at the project root.
+
 ## Environment
 
 - HQ Path: `/Users/wenqingyu/Documents/workspace/turboflow/Turboflow-HQ`

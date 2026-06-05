@@ -27,7 +27,7 @@ This wiki is the HQ control plane for risk-management policy. It separates polic
 
 ## Wiki Structure
 
-- [index.md](index.md): source map and first-pass review findings.
+- [index.md](Turboflow-HQ/specs/risk-management/index.md): source map and first-pass review findings.
 - [policy-register.md](policy-register.md): central register of policies, controls, owners, versions, status, and evidence.
 - [gap-register.md](gap-register.md): prioritized drift, missing evidence, and implementation gaps.
 - [governance.md](governance.md): policy lifecycle, versioning rules, review cadence, and change-control workflow.
